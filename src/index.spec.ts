@@ -4,6 +4,32 @@ import { spy } from 'nanospy';
 
 import * as dldr from '.';
 
+function safeThrow<T>(promise: Promise<T>) {
+	return promise.then(
+		(value) => ({ value, error: null }),
+		(error) => ({ value: null, error }),
+	);
+}
+
+function trackPromise<T extends Promise<any>>(promise: T) {
+	let resolved = false;
+	let rejected = false;
+
+	promise.then(
+		() => (resolved = true),
+		() => (rejected = true),
+	);
+
+	return {
+		get resolved() {
+			return resolved;
+		},
+		get rejected() {
+			return rejected;
+		},
+	};
+}
+
 test('should work', async () => {
 	const loader = spy((keys: string[]) => Promise.resolve(keys));
 
@@ -17,6 +43,38 @@ test('should work', async () => {
 	assert.equal(items[0], 'a');
 	assert.equal(items[1], 'b');
 	assert.equal(items[2], 'c');
+});
+
+test('shouldnt collect across ticks', async () => {
+	const loader = spy(async (keys: string[]) => keys);
+
+	const a = trackPromise(dldr.load(loader, 'a'));
+	const b = trackPromise(dldr.load(loader, 'b'));
+	const c = trackPromise(dldr.load(loader, 'c'));
+
+	assert.equal(a.resolved, false);
+	assert.equal(b.resolved, false);
+	assert.equal(c.resolved, false);
+
+	// @ts-ignore
+	await new Promise(setImmediate);
+
+	const d = trackPromise(dldr.load(loader, 'd'));
+
+	assert.equal(a.resolved, true);
+	assert.equal(b.resolved, true);
+	assert.equal(c.resolved, true);
+	assert.equal(d.resolved, false);
+
+	assert.equal(loader.callCount, 1);
+	assert.equal(loader.calls[0], [['a', 'b', 'c']]);
+
+	// @ts-ignore
+	await new Promise(setImmediate);
+
+	assert.equal(d.resolved, true);
+	assert.equal(loader.callCount, 2);
+	assert.equal(loader.calls[1], [['d']]);
 });
 
 test('maintains call arg order', async () => {
@@ -96,12 +154,6 @@ test('should reuse key', async () => {
 });
 
 const errors = suite('errors');
-
-const safeThrow = <T>(promise: Promise<T>) =>
-	promise.then(
-		(value) => ({ value, error: null }),
-		(error) => ({ value: null, error }),
-	);
 
 errors("reject all load's promises if loader throws", async () => {
 	const loader = spy(async () => {
