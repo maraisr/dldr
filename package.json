@@ -1,0 +1,48 @@
+{
+	"name": "dldr",
+	"version": "0.0.2",
+	"description": "A fast 365B dataloader implementation",
+	"keywords": [
+		"dataloader",
+		"batch",
+		"graphql",
+		"utility"
+	],
+	"repository": "maraisr/dldr",
+	"license": "MIT",
+	"author": "Marais Rossow <me@marais.dev> (https://marais.io)",
+	"sideEffects": false,
+	"exports": {
+		".": {
+			"types": "./index.d.ts",
+			"import": "./index.mjs",
+			"require": "./index.js"
+		},
+		"./package.json": "./package.json"
+	},
+	"main": "index.js",
+	"module": "index.mjs",
+	"types": "index.d.ts",
+	"files": [
+		"*.d.ts",
+		"index.js",
+		"index.mjs"
+	],
+	"scripts": {
+		"build": "bundt --minify",
+		"format": "prettier --write .",
+		"test": "uvu src \".spec.ts$\" -r tsm",
+		"typecheck": "tsc --noEmit"
+	},
+	"prettier": "@marais/prettier",
+	"devDependencies": {
+		"@marais/prettier": "0.0.1",
+		"@marais/tsconfig": "0.0.3",
+		"bundt": "2.0.0-next.5",
+		"nanospy": "0.5.0",
+		"prettier": "2.8.4",
+		"tsm": "2.3.0",
+		"typescript": "4.9.5",
+		"uvu": "0.5.6"
+	}
+}

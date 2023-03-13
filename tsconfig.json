@@ -1,0 +1,14 @@
+{
+	"extends": "@marais/tsconfig",
+	"compilerOptions": {
+		"noEmit": true,
+		"declaration": false,
+		"removeComments": false,
+		"baseUrl": ".",
+		"paths": {
+			"dldr": ["src/index.d.ts", "src/index.ts"]
+		}
+	},
+	"include": ["src"],
+	"exclude": ["node_modules"]
+}
