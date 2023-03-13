@@ -1,7 +1,7 @@
 {
 	"name": "dldr",
 	"version": "0.0.2",
-	"description": "A fast 365B dataloader implementation",
+	"description": "A tiny (365B) utility for batching and caching operations",
 	"keywords": [
 		"dataloader",
 		"batch",
