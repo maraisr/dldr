@@ -36,6 +36,12 @@ npm add dldr
 
 ## 🚀 Usage
 
+The default module will batch calls to your provided `loadFn` witin the current tick.
+
+Under the hood we schedule a function with
+[`queueMicrotask`](https://developer.mozilla.org/en-US/docs/Web/API/queueMicrotask). That then calls your `loadFn` with
+the unique keys that have been requested.
+
 ```ts
 import { load } from 'dldr';
 
@@ -70,6 +76,8 @@ expect(loaded).toEqual([
 
 ### Caching
 
+Once a key has been loaded, it will be cached for all future calls.
+
 ```ts
 import { load } from 'dldr/cache';
 import { getPosts } from './example';
@@ -87,6 +95,7 @@ const posts = Promise.all([
   loadPost('456'),
 ]);
 
+expect(getPosts).toHaveBeenCalledTimes(1);
 expect(getPosts).toHaveBeenCalledWith(['123', '456']);
 expect(loaded).toEqual([
   { id: '123', name: '123' },
@@ -96,9 +105,67 @@ expect(loaded).toEqual([
 
 // ⬇️ the cache will be used for subsequent calls
 const post = await loadPost('123');
-expect(getPosts).toHaveBeenCalledTimes(0);
+
+expect(getPosts).toHaveBeenCalledTimes(1); // still once
 expect(post).toEqual({ id: '123', name: '123' });
 ```
+
+### API
+
+#### Module: `dldr`
+
+The main entry point to start batching your calls.
+
+<!-- prettier-ignore-start -->
+```ts
+function load<T>(
+  loadFn: (keys: string[]) => Promise<(T | Error)[]>,
+  key: string
+): Promise<T>;
+```
+<!-- prettier-ignore-end -->
+
+> **Note** Might be worth calling `.bind` if you dont want to pass your loader everywhere.
+>
+> ```js
+> const userLoader = load.bind(null, getUsers);
+>
+> await userLoader('123');
+> ```
+
+#### Module: `dldr/cache`
+
+A submodule that will cache the results of your `loadFn` between ticks.
+
+```ts
+function load<T>(
+  loadFn: (keys: string[]) => Promise<(T | Error)[]>,
+  cache: MapLike<string, T> | undefined,
+  key: string,
+): Promise<T>;
+```
+
+> A default `Map` based `cache` will be used if you dont provide one.
+
+**_Self managed cache_**
+
+We explicitly do not handle mutations, so if you wish to retrieve fresh entries, or have a primed cache we recommend you
+do so yourself. All we require is a `Map` like object.
+
+Commonly an LRU cache is used, we recommend [`tmp-cache`](https://github.com/lukeed/tmp-cache).
+
+<details>
+
+<summary>Example</summary>
+
+```ts
+import LRU from 'tmp-cache';
+import { load } from 'dldr/cache';
+
+const loadUser = load.bind(null, getUsers, new LRU(100));
+```
+
+</details>
 
 ## License
 
