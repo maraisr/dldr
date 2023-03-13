@@ -59,4 +59,17 @@ test('on error should remove from cache', async () => {
 	assert.equal(cache.size, 0);
 });
 
+test('cache result should be referentially equal', async () => {
+	const loader = spy(async (keys: string[]) => keys.map((key) => ({ key })));
+
+	const cache = new Map();
+
+	const a = await dldr.load(loader, cache, 'a');
+	const b = await dldr.load(loader, cache, 'a');
+
+	assert.equal(a, { key: 'a' });
+	assert.is(a, b);
+	assert.equal(cache.size, 1);
+});
+
 test.run();
