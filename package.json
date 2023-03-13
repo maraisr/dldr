@@ -1,6 +1,6 @@
 {
 	"name": "dldr",
-	"version": "0.0.2",
+	"version": "0.0.3",
 	"description": "A tiny (365B) utility for batching and caching operations",
 	"keywords": [
 		"dataloader",
@@ -18,6 +18,11 @@
 			"import": "./index.mjs",
 			"require": "./index.js"
 		},
+		"./cache": {
+			"types": "./cache.d.ts",
+			"import": "./cache.mjs",
+			"require": "./cache.js"
+		},
 		"./package.json": "./package.json"
 	},
 	"main": "index.js",
@@ -25,8 +30,8 @@
 	"types": "index.d.ts",
 	"files": [
 		"*.d.ts",
-		"index.js",
-		"index.mjs"
+		"index.*",
+		"cache.*"
 	],
 	"scripts": {
 		"build": "bundt --minify",

@@ -68,6 +68,38 @@ expect(loaded).toEqual([
 ]);
 ```
 
+### Caching
+
+```ts
+import { load } from 'dldr/cache';
+import { getPosts } from './example';
+
+// operates the same as the above, but will cache the results of the load method
+
+const cache = new Map();
+
+const loadPost = load.bind(null, getPosts, cache);
+// note; cache is optional, and will be created if not provided
+
+const posts = Promise.all([
+  load(getPosts, cache, '123'),
+  loadPost('123'), // will be cached, and functionally equivalent to the above
+  loadPost('456'),
+]);
+
+expect(getPosts).toHaveBeenCalledWith(['123', '456']);
+expect(loaded).toEqual([
+  { id: '123', name: '123' },
+  { id: '123', name: '123' },
+  { id: '456', name: '456' },
+]);
+
+// ⬇️ the cache will be used for subsequent calls
+const post = await loadPost('123');
+expect(getPosts).toHaveBeenCalledTimes(0);
+expect(post).toEqual({ id: '123', name: '123' });
+```
+
 ## License
 
 MIT © [Marais Rossouw](https://marais.io)

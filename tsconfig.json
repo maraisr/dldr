@@ -6,7 +6,8 @@
 		"removeComments": false,
 		"baseUrl": ".",
 		"paths": {
-			"dldr": ["src/index.d.ts", "src/index.ts"]
+			"dldr": ["src/index.d.ts", "src/index.ts"],
+			"dldr/*": ["src/*.d.ts", "src/*.ts"]
 		}
 	},
 	"include": ["src"],
