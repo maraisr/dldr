@@ -34,6 +34,7 @@
 		"cache.*"
 	],
 	"scripts": {
+		"bench": "node bench/index.js",
 		"build": "bundt --minify",
 		"format": "prettier --write .",
 		"test": "uvu src \".spec.ts$\" -r tsm",

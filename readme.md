@@ -167,6 +167,24 @@ const loadUser = load.bind(null, getUsers, new LRU(100));
 
 </details>
 
+## 💨 Benchmark
+
+> via the [`/bench`](/bench) directory with Node v19.7.0
+
+```
+Validation
+  ✔ dldr
+  ✔ dldr/cache
+  ✔ dataloader
+  ✔ dataloader/cache
+
+Benchmark
+  dldr              x 1,383,287 ops/sec ±0.28% (89 runs sampled)
+  dldr/cache        x 1,223,308 ops/sec ±3.24% (82 runs sampled)
+  dataloader        x 1,082,822 ops/sec ±0.19% (88 runs sampled)
+  dataloader/cache  x 1,087,878 ops/sec ±0.23% (92 runs sampled)
+```
+
 ## License
 
 MIT © [Marais Rossouw](https://marais.io)
