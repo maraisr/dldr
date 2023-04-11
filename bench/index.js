@@ -36,12 +36,13 @@ async function runner(contenders) {
 	for (const [name, contender] of Object.entries(contenders)) {
 		try {
 			const lib = contender();
-			const results = await Promise.all(keys.map(lib));
+			const results = await Promise.all(keys.map((v) => lib(v)));
 			const isSame = results.every((result, i) => result === keys[i]);
-			if (!isSame)
+			if (!isSame) {
 				throw new Error(
 					`expected to return values in the same order as the input`,
 				);
+			}
 			console.log('  ✔', name);
 		} catch (err) {
 			console.log('  ✘', name, `(FAILED @ "${err.message}")`);
@@ -58,7 +59,7 @@ async function runner(contenders) {
 		bench.add(name, {
 			defer: true,
 			fn: function (deferred) {
-				Promise.all(keys.map(lib)).then(() => {
+				Promise.all(keys.map((v) => lib(v))).then((v) => {
 					deferred.resolve();
 				});
 			},
@@ -67,7 +68,7 @@ async function runner(contenders) {
 
 	return new Promise((resolve) => {
 		bench.on('complete', resolve);
-		bench.run({ async: true });
+		bench.run({ async: false, queued: true });
 	});
 }
 
