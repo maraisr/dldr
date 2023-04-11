@@ -1,4 +1,4 @@
-import benchmark from 'benchmark';
+import { EMPTY, suite } from '@thi.ng/bench';
 import DataLoader from 'dataloader';
 import * as dldr from 'dldr';
 import * as dldrCache from 'dldr/cache';
@@ -32,44 +32,61 @@ const contenders = {
 async function runner(contenders) {
 	const keys = ['a', 'b', 'c', 'a'];
 
-	console.log('\nValidation');
+	const cases = [];
 	for (const [name, contender] of Object.entries(contenders)) {
-		try {
-			const lib = contender();
-			const results = await Promise.all(keys.map((v) => lib(v)));
-			const isSame = results.every((result, i) => result === keys[i]);
-			if (!isSame) {
-				throw new Error(
-					`expected to return values in the same order as the input`,
-				);
-			}
-			console.log('  ✔', name);
-		} catch (err) {
-			console.log('  ✘', name, `(FAILED @ "${err.message}")`);
+		{
+			const run = contender();
+			const results = await Promise.all(keys.map(run));
+			console.assert(results.every((result, i) => result === keys[i]));
 		}
+
+		const run = contender();
+		const fn = async () => Promise.all(keys.map(run));
+		cases.push({ fn, title: name });
 	}
 
-	console.log('\nBenchmark');
-	const bench = new benchmark.Suite().on('cycle', (e) => {
-		console.log('  ' + e.target);
-	});
-
-	for (const [name, contender] of Object.entries(contenders)) {
-		var lib = contender();
-		bench.add(name, {
-			defer: true,
-			fn: function (deferred) {
-				Promise.all(keys.map((v) => lib(v))).then((v) => {
-					deferred.resolve();
-				});
-			},
-		});
-	}
-
-	return new Promise((resolve) => {
-		bench.on('complete', resolve);
-		bench.run({ async: false, queued: true });
+	suite(cases, {
+		warmup: 300,
+		size: 50,
+		iter: 10_000,
+		format: FORMAT(),
 	});
 }
+
+const FORMAT = () => {
+	const formatter = new Intl.NumberFormat('en-US');
+	return {
+		prefix: EMPTY,
+		suffix: EMPTY,
+		start: EMPTY,
+		warmup: EMPTY,
+		result: EMPTY,
+		total(a) {
+			const winner = a.slice().sort((a, b) => a.mean - b.mean)[0];
+			const compute = a.map((x) => {
+				return {
+					title: x.title,
+					won: x === winner,
+					ops: formatter.format(
+						Math.floor((x.iter * x.size) / (x.total / 1000)),
+					),
+					sd: (x.sd / 1000).toFixed(2),
+				};
+			});
+			const max_name = Math.max(...a.map((x) => x.title.length));
+			const max_ops = Math.max(...compute.map((x) => x.ops.length));
+			const lines = [];
+			for (const x of compute) {
+				const won = x.won ? '★ ' : '  ';
+				lines.push(
+					`${won}${x.title.padEnd(max_name)} ~ ${x.ops.padStart(
+						max_ops,
+					)} ops/sec ± ${x.sd}%`,
+				);
+			}
+			return lines.join('\n');
+		},
+	};
+};
 
 await runner(contenders);

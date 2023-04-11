@@ -1,8 +1,7 @@
 {
 	"type": "module",
 	"devDependencies": {
-		"@types/benchmark": "^2.1.2",
-		"benchmark": "^2.1.4",
+		"@thi.ng/bench": "^3.2.9",
 		"dataloader": "^2.2.2",
 		"dldr": "file:../"
 	}
