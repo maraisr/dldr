@@ -2,22 +2,22 @@ lockfileVersion: 5.4
 
 specifiers:
   '@marais/prettier': 0.0.1
-  '@marais/tsconfig': 0.0.3
+  '@marais/tsconfig': 0.0.4
   bundt: 2.0.0-next.5
   nanospy: 0.5.0
-  prettier: 2.8.4
+  prettier: 2.8.7
   tsm: 2.3.0
-  typescript: 4.9.5
+  typescript: 5.0.4
   uvu: 0.5.6
 
 devDependencies:
   '@marais/prettier': 0.0.1
-  '@marais/tsconfig': 0.0.3
+  '@marais/tsconfig': 0.0.4
   bundt: 2.0.0-next.5
   nanospy: 0.5.0
-  prettier: 2.8.4
+  prettier: 2.8.7
   tsm: 2.3.0
-  typescript: 4.9.5
+  typescript: 5.0.4
   uvu: 0.5.6
 
 packages:
@@ -90,8 +90,8 @@ packages:
     resolution: {integrity: sha512-2dSx4GqwgEylxvSamA5jH1XTXx9QrM89CToB1xiciJbtYv6PMWvX0lZ2viWDk2viWh91/Qd4cpBAvdi+LDKC0A==}
     dev: true
 
-  /@marais/tsconfig/0.0.3:
-    resolution: {integrity: sha512-KRJiOww98fD1ODCGxTiA8EIiXDtm7VaIEVfkeQ8yHA4SUcuBib85qgM1bQ6wD8H72YR8MMmXAxTfBusLBPnqjw==}
+  /@marais/tsconfig/0.0.4:
+    resolution: {integrity: sha512-b6KCal22xP6E8wgl52rxdf8MXuffI4oJ9aTosucX4aVb97yl01wU0PzGF67oMA/i9KdzLa0rjQ0zVdZ+1pvVAg==}
     dev: true
 
   /acorn/8.8.2:
@@ -562,8 +562,8 @@ packages:
     engines: {node: ^8.0.0 || ^10.0.0 || ^12.0.0 || ^14.0.0 || >=16.0.0}
     dev: true
 
-  /prettier/2.8.4:
-    resolution: {integrity: sha512-vIS4Rlc2FNh0BySk3Wkd6xmwxB0FpOndW5fisM5H8hsZSxU2VWVB5CWIkIjWvrHjIhxk2g3bfMKM87zNTrZddw==}
+  /prettier/2.8.7:
+    resolution: {integrity: sha512-yPngTo3aXUUmyuTjeTUT75txrf+aMh9FiD7q9ZE/i6r0bPb22g4FsE6Y338PQX1bmfy08i9QQCB7/rcUAVntfw==}
     engines: {node: '>=10.13.0'}
     hasBin: true
     dev: true
@@ -611,9 +611,9 @@ packages:
       esbuild: 0.15.18
     dev: true
 
-  /typescript/4.9.5:
-    resolution: {integrity: sha512-1FXk9E2Hm+QzZQ7z+McJiHL4NW1F2EzMu9Nq9i3zAaGqibafqYwCVU6WyWAuyQRRzOlxou8xZSyXLEN8oKj24g==}
-    engines: {node: '>=4.2.0'}
+  /typescript/5.0.4:
+    resolution: {integrity: sha512-cW9T5W9xY37cc+jfEnaUvX91foxtHkza3Nw3wkoF4sSlKn0MONdkdEndig/qPBWXNkmplh3NzayQzCiHM4/hqw==}
+    engines: {node: '>=12.20'}
     hasBin: true
     dev: true
 
