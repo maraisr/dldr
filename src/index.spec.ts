@@ -153,6 +153,38 @@ test('should reuse key', async () => {
 	assert.equal(items[2], 'a');
 });
 
+test('allow using number key type', async () => {
+	const loader = spy(async (keys: number[]) => keys);
+
+	const items = await Promise.all([
+		dldr.load(loader, 1),
+		dldr.load(loader, 2),
+		dldr.load(loader, 3),
+	]);
+
+	assert.equal(loader.callCount, 1);
+	assert.equal(loader.calls[0], [[1, 2, 3]]);
+	assert.equal(items[0], 1);
+	assert.equal(items[1], 2);
+	assert.equal(items[2], 3);
+});
+
+test('allow using object key type', async () => {
+	const loader = spy(async (keys: { x: number }[]) => keys);
+
+	const items = await Promise.all([
+		dldr.load(loader, { x: 1 }),
+		dldr.load(loader, { x: 2 }),
+		dldr.load(loader, { x: 3 }),
+	]);
+
+	assert.equal(loader.callCount, 1);
+	assert.equal(loader.calls[0], [[{ x: 1 }, { x: 2 }, { x: 3 }]]);
+	assert.equal(items[0], { x: 1 });
+	assert.equal(items[1], { x: 2 });
+	assert.equal(items[2], { x: 3 });
+});
+
 const errors = suite('errors');
 
 errors("reject all load's promises if loader throws", async () => {

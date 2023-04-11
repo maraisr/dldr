@@ -7,11 +7,11 @@ type CB<T> = {
 };
 
 const batchContainer = new WeakMap<
-	LoadFn<any>,
-	{ cb: CB<any>[]; keys: string[] }
+	LoadFn<any, any>,
+	{ cb: CB<any>[]; keys: any[] }
 >();
 
-export function load<T>(loadFn: LoadFn<T>, key: string): Promise<T> {
+export function load<T, K = string>(loadFn: LoadFn<T, K>, key: K): Promise<T> {
 	let batch = batchContainer.get(loadFn);
 
 	if (!batch) {

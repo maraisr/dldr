@@ -1,3 +1,3 @@
-export type LoadFn<T> = (keys: string[]) => Promise<(T | Error)[]>;
+export type LoadFn<T, K = string> = (keys: K[]) => Promise<(T | Error)[]>;
 
-export function load<T>(loadFn: LoadFn<T>, key: string): Promise<T>;
+export function load<T, K = string>(loadFn: LoadFn<T>, key: K): Promise<T>;
