@@ -74,6 +74,47 @@ expect(loaded).toEqual([
 ]);
 ```
 
+<details>
+
+<summary>GraphQL Resolver Example</summary>
+
+```ts
+import { load } from 'dldr';
+import { graphql, buildSchema } from 'graphql';
+
+const schema = buildSchema(`
+    type Query {
+        me(name: String!): String!
+    }
+`);
+
+const operation = `{
+    a: me(name: "John")
+    b: me(name: "Jane")
+}`;
+
+const results = await graphql({
+  schema,
+  source: operation,
+  contextValue: {
+    getUser: load.bind(null, async (names) => {
+      // Assume youre calling out to a db or something
+      const result = names.map((name) => name);
+
+      // lets pretend this is a promise
+      return Promise.resolve(result);
+    }),
+  },
+  rootValue: {
+    me: ({ name }, ctx) => {
+      return ctx.getUser(name);
+    },
+  },
+});
+```
+
+</details>
+
 ### Caching
 
 Once a key has been loaded, it will be cached for all future calls.
