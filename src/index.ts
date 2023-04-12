@@ -1,7 +1,7 @@
 import type { LoadFn } from 'dldr';
 import { identify } from 'object-identity';
 
-type CB<T> = {
+type Task<T> = {
 	promise: Promise<T>;
 	resolve: (v: T) => void;
 	reject: (e: Error) => void;
@@ -9,7 +9,7 @@ type CB<T> = {
 
 const batchContainer = new WeakMap<
 	LoadFn<any, any>,
-	{ c: CB<any>[]; r: any[]; k: string[] }
+	{ c: Task<any>[]; r: any[]; k: string[] }
 >();
 
 export function load<T, K = string>(
