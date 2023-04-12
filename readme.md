@@ -9,10 +9,10 @@
 **A tiny (365B) utility for batching and caching operations**
 
 <a href="https://npm-stat.com/charts.html?package=dldr">
-  <img src="https://badgen.net/npm/dm/dldr?labelColor=black&color=black&label=npm downloads" alt="js downloads"/>
+  <img src="https://badgen.net/npm/dm/dldr?labelColor=black&color=black&label=npm%20downloads" alt="js downloads">
 </a>
 <a href="https://bundlephobia.com/result?p=dldr">
-  <img src="https://badgen.net/bundlephobia/minzip/dldr?labelColor=black&color=black" alt="size"/>
+  <img src="https://badgen.net/bundlephobia/minzip/dldr?labelColor=black&color=black" alt="size">
 </a>
 
 <br />
