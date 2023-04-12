@@ -6,7 +6,7 @@
 
 </samp>
 
-**A tiny (365B) utility for batching and caching operations**
+**A tiny (385B) utility for batching and caching operations**
 
 <a href="https://npm-stat.com/charts.html?package=dldr">
   <img src="https://badgen.net/npm/dm/dldr?labelColor=black&color=black&label=npm%20downloads" alt="js downloads">
@@ -210,13 +210,13 @@ const loadUser = load.bind(null, getUsers, new LRU(100));
 
 ## 💨 Benchmark
 
-> via the [`/bench`](/bench) directory with Node v16.20.0
+> via the [`/bench`](/bench) directory with Node v19.9.0
 
 ```
-  dldr             ~ 581,954 ops/sec ± 2.24%
-★ dldr/cache       ~ 718,551 ops/sec ± 0.85%
-  dataloader       ~ 301,836 ops/sec ± 2.93%
-  dataloader/cache ~ 295,846 ops/sec ± 0.74%
+  dldr             ~ 568,007 ops/sec ± 2.28%
+★ dldr/cache       ~ 716,024 ops/sec ± 0.85%
+  dataloader       ~ 303,944 ops/sec ± 2.94%
+  dataloader/cache ~ 307,098 ops/sec ± 0.74%
 ```
 
 ## License

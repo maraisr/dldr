@@ -1,7 +1,7 @@
 {
 	"name": "dldr",
 	"version": "0.0.4",
-	"description": "A tiny (365B) utility for batching and caching operations",
+	"description": "A tiny (385B) utility for batching and caching operations",
 	"keywords": [
 		"dataloader",
 		"batch",
@@ -35,7 +35,7 @@
 	],
 	"scripts": {
 		"bench": "node bench/index.js",
-		"build": "bundt",
+		"build": "bundt --minify",
 		"format": "prettier --write .",
 		"test": "uvu src \".spec.ts$\" -r tsm",
 		"typecheck": "tsc --noEmit"
