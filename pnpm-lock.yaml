@@ -1,5 +1,10 @@
 lockfileVersion: '6.0'
 
+dependencies:
+  object-identity:
+    specifier: ^0.0.6
+    version: 0.0.6
+
 devDependencies:
   '@marais/prettier':
     specifier: 0.0.1
@@ -567,6 +572,10 @@ packages:
     resolution: {integrity: sha512-QxH93ntkjRiSP+gJrBLcgOO3neU6pGhUKjPAJ7rAFag/+tJ+/0lw6dXic+iXUQ/3Cxk4Dp/FwLnf57xnQsjecQ==}
     engines: {node: ^8.0.0 || ^10.0.0 || ^12.0.0 || ^14.0.0 || >=16.0.0}
     dev: true
+
+  /object-identity@0.0.6:
+    resolution: {integrity: sha512-5h112h/bIUVbPAUoNLbTCb2bpS8gJ3fJLqS8NJiEpNfa+0koq7X/C1GBhkcDiCiseS6dgc06Xe40BWxZyaySrw==}
+    dev: false
 
   /prettier@2.8.7:
     resolution: {integrity: sha512-yPngTo3aXUUmyuTjeTUT75txrf+aMh9FiD7q9ZE/i6r0bPb22g4FsE6Y338PQX1bmfy08i9QQCB7/rcUAVntfw==}

@@ -35,12 +35,15 @@
 	],
 	"scripts": {
 		"bench": "node bench/index.js",
-		"build": "bundt --minify",
+		"build": "bundt",
 		"format": "prettier --write .",
 		"test": "uvu src \".spec.ts$\" -r tsm",
 		"typecheck": "tsc --noEmit"
 	},
 	"prettier": "@marais/prettier",
+	"dependencies": {
+		"object-identity": "^0.0.6"
+	},
 	"devDependencies": {
 		"@marais/prettier": "0.0.1",
 		"@marais/tsconfig": "0.0.4",

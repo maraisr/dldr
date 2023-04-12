@@ -112,7 +112,7 @@ test('should use different cache between loaders (default)', async () => {
 	assert.equal(item, 'a');
 });
 
-test.skip('should support non string keys', async () => {
+test('should support non string keys', async () => {
 	const loader = spy(async (keys: { x: number }[]) => keys);
 
 	const cache = new Map();

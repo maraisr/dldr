@@ -153,7 +153,7 @@ test('should reuse key', async () => {
 	assert.equal(items[2], 'a');
 });
 
-test.skip('should reuse key when not a string key', async () => {
+test('should reuse key when not a string key', async () => {
 	const loader = spy(async (keys: { x: number }[]) => keys);
 
 	const items = await Promise.all([
