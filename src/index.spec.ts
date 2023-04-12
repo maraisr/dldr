@@ -153,6 +153,22 @@ test('should reuse key', async () => {
 	assert.equal(items[2], 'a');
 });
 
+test.skip('should reuse key when not a string key', async () => {
+	const loader = spy(async (keys: { x: number }[]) => keys);
+
+	const items = await Promise.all([
+		dldr.load(loader, { x: 1 }),
+		dldr.load(loader, { x: 1 }),
+		dldr.load(loader, { x: 1 }),
+	]);
+
+	assert.equal(loader.callCount, 1);
+	assert.equal(loader.calls[0], [[{ x: 1 }]]);
+	assert.equal(items[0], { x: 1 });
+	assert.equal(items[1], { x: 1 });
+	assert.equal(items[2], { x: 1 });
+});
+
 test('allow using number key type', async () => {
 	const loader = spy(async (keys: number[]) => keys);
 

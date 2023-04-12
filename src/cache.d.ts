@@ -7,8 +7,8 @@ export type MapLike<K, V> = {
 	delete(key: K): void;
 };
 
-export function load<T>(
-	loadFn: LoadFn<T>,
+export function load<T, K = string>(
+	loadFn: LoadFn<T, K>,
 	cache: MapLike<string, Promise<T>> | undefined,
-	key: string,
+	key: K,
 ): Promise<T>;

@@ -112,4 +112,25 @@ test('should use different cache between loaders (default)', async () => {
 	assert.equal(item, 'a');
 });
 
+test.skip('should support non string keys', async () => {
+	const loader = spy(async (keys: { x: number }[]) => keys);
+
+	const cache = new Map();
+
+	const items = await Promise.all([
+		dldr.load(loader, cache, { x: 1 }),
+		dldr.load(loader, cache, { x: 2 }),
+		dldr.load(loader, cache, { x: 3 }),
+		dldr.load(loader, cache, { x: 1 }),
+	]);
+
+	assert.equal(loader.callCount, 1);
+	assert.equal(loader.calls[0], [[{ x: 1 }, { x: 2 }, { x: 3 }]]);
+	assert.equal(items[0], { x: 1 });
+	assert.equal(items[1], { x: 2 });
+	assert.equal(items[2], { x: 3 });
+	assert.equal(items[3], { x: 1 });
+	assert.equal(cache.size, 3);
+});
+
 test.run();
