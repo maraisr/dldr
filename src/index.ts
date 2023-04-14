@@ -2,9 +2,9 @@ import type { LoadFn } from 'dldr';
 import { identify } from 'object-identity';
 
 type Task<T> = {
-	promise: Promise<T>;
-	resolve(v: T): void;
-	reject(e: Error): void;
+	p: Promise<T>;
+	s(v: T): void;
+	r(e: Error): void;
 };
 
 type Batch<T, K> = Map<string, [key: K, task: Task<T>]>;
@@ -26,23 +26,24 @@ export function load<T, K = string>(
 
 			let tasks: Task<T>[] = [];
 			let keys: K[] = [];
-			for (let x of batch!.values()) keys.push(x[0]), tasks.push(x[1]);
+			let tmp;
+			for (tmp of batch!.values()) keys.push(tmp[0]), tasks.push(tmp[1]);
 
-			loadFn(keys)
-				.then(function (values) {
-					if (values.length !== tasks.length)
-						throw new Error('loader value length mismatch');
+			loadFn(keys).then(function (values) {
+				if (values.length !== tasks.length)
+					return reject(new Error('loader value length mismatch'));
 
-					let i = values.length;
-					for (; i-- > 0; ) {
-						let v = values[i];
-						if (v instanceof Error) tasks[i].reject(v);
-						else tasks[i].resolve(v);
-					}
-				})
-				.catch(function (error) {
-					for (let task of tasks) task.reject(error);
-				});
+				let i = values.length;
+				for (
+					;
+					(tmp = values[--i]), i >= 0;
+					tmp instanceof Error ? tasks[i].r(tmp) : tasks[i].s(tmp)
+				);
+			}, reject);
+
+			function reject(error: Error) {
+				for (let task of tasks) task.r(error);
+			}
 		});
 	}
 
@@ -50,10 +51,10 @@ export function load<T, K = string>(
 	let b = batch.get(identity);
 	let p: Task<T>;
 	if (!b) batch.set(identity, [key, (p = {} as Task<T>)]);
-	else return b[1].promise;
+	else return b[1].p;
 
-	return (p.promise = new Promise<T>(function (resolve, reject) {
-		p.resolve = resolve;
-		p.reject = reject;
+	return (p.p = new Promise<T>(function (resolve, reject) {
+		p.s = resolve;
+		p.r = reject;
 	}));
 }
