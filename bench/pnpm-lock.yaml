@@ -29,8 +29,14 @@ packages:
     resolution: {integrity: sha512-8YnDaaf7N3k/q5HnTJVuzSyLETjoZjVmHc4AeKAzOvKHEFQKcn64OKBfzHYtE9zGjctNM7V9I0MfnUVLpi7M5g==}
     dev: true
 
+  /object-identity@0.0.6:
+    resolution: {integrity: sha512-5h112h/bIUVbPAUoNLbTCb2bpS8gJ3fJLqS8NJiEpNfa+0koq7X/C1GBhkcDiCiseS6dgc06Xe40BWxZyaySrw==}
+    dev: true
+
   file:..:
     resolution: {directory: .., type: directory}
     name: dldr
     version: 0.0.4
+    dependencies:
+      object-identity: 0.0.6
     dev: true
