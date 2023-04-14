@@ -7,10 +7,9 @@ type Task<T> = {
 	reject(e: Error): void;
 };
 
-let batchContainer = new WeakMap<
-	LoadFn<any, any>,
-	Map<string, [key: any, task: Task<any>]>
->();
+type Batch<T, K> = Map<string, [key: K, task: Task<T>]>;
+
+let batchContainer = new WeakMap<LoadFn<any, any>, Batch<any, any>>();
 
 export function load<T, K = string>(
 	loadFn: LoadFn<T, K>,
