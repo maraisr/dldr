@@ -26,23 +26,26 @@ export function load<T, K = string>(
 
 			let tasks: Task<T>[] = [];
 			let keys: K[] = [];
-			let tmp;
+			let tmp, i;
 			for (tmp of batch!.values()) keys.push(tmp[0]), tasks.push(tmp[1]);
 
 			loadFn(keys).then(function (values) {
 				if (values.length !== tasks.length)
 					return reject(new Error('loader value length mismatch'));
 
-				let i = values.length;
+				i = 0;
 				for (
 					;
-					(tmp = values[--i]), i >= 0;
-					tmp instanceof Error ? tasks[i].r(tmp) : tasks[i].s(tmp)
+					(tmp = values[i++]), i <= values.length;
+					tmp instanceof Error
+						? tasks[i - 1].r(tmp)
+						: tasks[i - 1].s(tmp)
 				);
 			}, reject);
 
 			function reject(error: Error) {
-				for (let task of tasks) task.r(error);
+				i = 0;
+				for (; (tmp = tasks[i++]); tmp.r(error));
 			}
 		});
 	}
