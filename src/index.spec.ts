@@ -283,5 +283,19 @@ errors('rejects all promises for the same key', async () => {
 	assert.instance(items[2].error, Error);
 });
 
+test('2 loaders nested in a .then chain', async () => {
+	const loader = spy(async (keys: string[]) => keys);
+
+	const items = await Promise.all([
+		dldr.load(loader, 'a').then(() => dldr.load(loader, 'b')),
+		dldr.load(loader, 'c').then(() => dldr.load(loader, 'd')),
+	]);
+
+	assert.equal(items, ['b', 'd']);
+	assert.equal(loader.callCount, 2);
+	assert.equal(loader.calls[0], [['a', 'c']]);
+	assert.equal(loader.calls[1], [['b', 'd']]);
+});
+
 test.run();
 errors.run();
