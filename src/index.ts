@@ -61,3 +61,11 @@ export function load<T, K = string>(
 		p.r = reject;
 	}));
 }
+
+export function factory<T, K = string>(
+	loadFn: LoadFn<T, K>,
+): (key: K, identity?: string | undefined) => Promise<T> {
+	return function (key: K, identity?: string | undefined) {
+		return load(loadFn, key, identity);
+	};
+}
