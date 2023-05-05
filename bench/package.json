@@ -1,7 +1,7 @@
 {
 	"type": "module",
-	"devDependencies": {
-		"@thi.ng/bench": "^3.2.9",
+	"dependencies": {
+		"@marais/bench": "0.0.5",
 		"dataloader": "^2.2.2",
 		"dldr": "file:../"
 	}
