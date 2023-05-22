@@ -11,8 +11,7 @@ const contenders = {
 	},
 	'dldr/cache': () => {
 		const cache = new Map();
-		return (keys) =>
-			Promise.all(keys.map((key) => dldrCache.load(loadFn, cache, key)));
+		return (keys) => Promise.all(keys.map((key) => dldrCache.load(loadFn, cache, key)));
 	},
 	dataloader: () => {
 		const loader = new DataLoader(loadFn, {

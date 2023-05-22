@@ -1,7 +1,7 @@
 {
 	"type": "module",
 	"dependencies": {
-		"@marais/bench": "0.0.5",
+		"@marais/bench": "0.0.8",
 		"dataloader": "^2.2.2",
 		"dldr": "file:../"
 	}

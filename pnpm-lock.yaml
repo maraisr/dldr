@@ -7,8 +7,8 @@ dependencies:
 
 devDependencies:
   '@marais/prettier':
-    specifier: 0.0.1
-    version: 0.0.1
+    specifier: 0.0.2
+    version: 0.0.2
   '@marais/tsconfig':
     specifier: 0.0.4
     version: 0.0.4
@@ -19,8 +19,8 @@ devDependencies:
     specifier: 0.5.0
     version: 0.5.0
   prettier:
-    specifier: 2.8.7
-    version: 2.8.7
+    specifier: 2.8.8
+    version: 2.8.8
   tsm:
     specifier: 2.3.0
     version: 2.3.0
@@ -101,8 +101,8 @@ packages:
       '@jridgewell/sourcemap-codec': 1.4.14
     dev: true
 
-  /@marais/prettier@0.0.1:
-    resolution: {integrity: sha512-2dSx4GqwgEylxvSamA5jH1XTXx9QrM89CToB1xiciJbtYv6PMWvX0lZ2viWDk2viWh91/Qd4cpBAvdi+LDKC0A==}
+  /@marais/prettier@0.0.2:
+    resolution: {integrity: sha512-gvPOevtXqyf/YYrneZghtNBtMGrB855EOSeXxgd+tdnpNT0Q+9QaooJHMx2SPrtSUx1tMJXrjW0XB1eiM4aBUA==}
     dev: true
 
   /@marais/tsconfig@0.0.4:
@@ -126,7 +126,7 @@ packages:
     dependencies:
       esbuild: 0.14.54
       rewrite-imports: 2.0.3
-      terser: 5.16.9
+      terser: 5.17.5
     dev: true
 
   /commander@2.20.3:
@@ -581,8 +581,8 @@ packages:
     resolution: {integrity: sha512-5h112h/bIUVbPAUoNLbTCb2bpS8gJ3fJLqS8NJiEpNfa+0koq7X/C1GBhkcDiCiseS6dgc06Xe40BWxZyaySrw==}
     dev: false
 
-  /prettier@2.8.7:
-    resolution: {integrity: sha512-yPngTo3aXUUmyuTjeTUT75txrf+aMh9FiD7q9ZE/i6r0bPb22g4FsE6Y338PQX1bmfy08i9QQCB7/rcUAVntfw==}
+  /prettier@2.8.8:
+    resolution: {integrity: sha512-tdN8qQGvNjw4CHbY+XXk0JgCXn9QiF21a55rBe5LJAU+kDyC4WQn4+awm2Xfk2lQMk5fKup9XgzTZtGkjBdP9Q==}
     engines: {node: '>=10.13.0'}
     hasBin: true
     dev: true
@@ -611,8 +611,8 @@ packages:
     engines: {node: '>=0.10.0'}
     dev: true
 
-  /terser@5.16.9:
-    resolution: {integrity: sha512-HPa/FdTB9XGI2H1/keLFZHxl6WNvAI4YalHGtDQTlMnJcoqSab1UwL4l1hGEhs6/GmLHBZIg/YgB++jcbzoOEg==}
+  /terser@5.17.5:
+    resolution: {integrity: sha512-NqFkzBX34WExkCbk3K5urmNCpEWqMPZnwGI1pMHwqvJ/zDlXC75u3NI7BrzoR8/pryy8Abx2e1i8ChrWkhH1Hg==}
     engines: {node: '>=10'}
     hasBin: true
     dependencies:

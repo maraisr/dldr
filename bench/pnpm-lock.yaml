@@ -2,8 +2,8 @@ lockfileVersion: '6.0'
 
 dependencies:
   '@marais/bench':
-    specifier: 0.0.5
-    version: 0.0.5
+    specifier: 0.0.8
+    version: 0.0.8
   dataloader:
     specifier: ^2.2.2
     version: 2.2.2
@@ -13,22 +13,22 @@ dependencies:
 
 packages:
 
-  /@marais/bench@0.0.5:
-    resolution: {integrity: sha512-A/ULlXI6l4vyVrChNDFNfD3xvtr8cEeydraWvichOp+US5KxAX81DDXPHtQt7/K7FKsJ7ucJ300qUiqbAd1eTg==}
+  /@marais/bench@0.0.8:
+    resolution: {integrity: sha512-DZ3TqK1eUN77E2nV2Aj2aady61rveJGqGAPNQglzoJL001HJq9elFLRS6pw25e6geIEmRld9cJ5F/EHFUYa+DQ==}
     dependencies:
-      '@thi.ng/bench': 3.2.10
+      '@thi.ng/bench': 3.2.11
     dev: false
 
-  /@thi.ng/api@8.8.0:
-    resolution: {integrity: sha512-uQgM6FYDFjcYXHOxVX0giwcytzFULBwwN7ASTcJ0zbJo8lf6OwyMFBT8kxdwfP+pSX05nCtWMEUyLRX+aR1SEA==}
+  /@thi.ng/api@8.8.1:
+    resolution: {integrity: sha512-ugTtl3dvOuRsLAF9hZcd/ULBXDG0cAacEQ26jRY00JEEwdy24WR1DOO4iL2mHei0vm2HyvfJ8IlJoRR7mSSqUA==}
     engines: {node: '>=12.7'}
     dev: false
 
-  /@thi.ng/bench@3.2.10:
-    resolution: {integrity: sha512-QiN18fK/kJiaz9xCjAGIfCMZWnWcFGJrno9cDe5t5UH8/tP0vBH1bZvWsOpcfjSzoNM++v4ReTCoqMkpKxnHeg==}
+  /@thi.ng/bench@3.2.11:
+    resolution: {integrity: sha512-1SSCfwbIXJ9KUIjAaLZEmKSC5OCQf5hDpmzLXlhDFr1SlOaBYXgtu+k8GrSRqmu2kezTV0u23nfW7LSJ5YX2ZA==}
     engines: {node: '>=12.7'}
     dependencies:
-      '@thi.ng/api': 8.8.0
+      '@thi.ng/api': 8.8.1
     dev: false
 
   /dataloader@2.2.2:
@@ -42,7 +42,7 @@ packages:
   file:..:
     resolution: {directory: .., type: directory}
     name: dldr
-    version: 0.0.8
+    version: 0.0.9
     dependencies:
       object-identity: 0.0.6
     dev: false
