@@ -37,7 +37,7 @@
 		"bench": "node bench/index.js",
 		"build": "bundt --minify",
 		"format": "prettier --write .",
-		"test": "uvu src \".spec.ts$\" -r tsm",
+		"test": "uvu src \".test.ts$\" -r tsm",
 		"typecheck": "tsc --noEmit"
 	},
 	"prettier": "@marais/prettier",

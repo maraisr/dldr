@@ -1,6 +1,7 @@
 import { spy } from 'nanospy';
 import { test } from 'uvu';
 import * as assert from 'uvu/assert';
+
 import * as dldr from './cache';
 
 test('should work with default cache', async () => {
