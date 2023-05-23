@@ -14,7 +14,7 @@ let batchContainer = new WeakMap<LoadFn<any, any>, Batch<any, any>>();
 export function load<T, K = string>(
 	loadFn: LoadFn<T, K>,
 	key: K,
-	identity?: string | undefined,
+	identity: string = identify(key),
 ): Promise<T> {
 	let batch = batchContainer.get(loadFn);
 
@@ -48,11 +48,11 @@ export function load<T, K = string>(
 		});
 	}
 
-	identity ||= identify(key);
 	let b = batch.get(identity);
-	let p: Task<T>;
-	if (!b) batch.set(identity, [key, (p = {} as Task<T>)]);
-	else return b[1].p;
+	if (b) return b[1].p;
+
+	let p = {} as Task<T>;
+	batch.set(identity, [key, p]);
 
 	return (p.p = new Promise<T>(function (resolve, reject) {
 		p.s = resolve;
