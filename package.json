@@ -1,6 +1,6 @@
 {
 	"name": "dldr",
-	"version": "0.0.8",
+	"version": "0.0.9",
 	"description": "A tiny (367B) utility for batching and caching operations",
 	"keywords": [
 		"dataloader",
