@@ -1,5 +1,9 @@
 lockfileVersion: '6.0'
 
+settings:
+  autoInstallPeers: true
+  excludeLinksFromLockfile: false
+
 dependencies:
   '@marais/bench':
     specifier: 0.0.8
@@ -42,7 +46,6 @@ packages:
   file:..:
     resolution: {directory: .., type: directory}
     name: dldr
-    version: 0.0.9
     dependencies:
       object-identity: 0.0.6
     dev: false
