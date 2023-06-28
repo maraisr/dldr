@@ -107,7 +107,10 @@ test('new batch once await', async () => {
 	assert.equal(items[1], 'b');
 	assert.equal(items[2], 'c');
 
-	const items2 = await Promise.all([dldr.load(loader, 'd'), dldr.load(loader, 'e')]);
+	const items2 = await Promise.all([
+		dldr.load(loader, 'd'),
+		dldr.load(loader, 'e'),
+	]);
 
 	assert.equal(loader.callCount, 2);
 	assert.equal(loader.calls[1], [['d', 'e']]);

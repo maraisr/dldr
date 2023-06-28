@@ -37,7 +37,9 @@ export function load<T, K = string>(
 				for (
 					;
 					(tmp = values[i++]), i <= values.length;
-					tmp instanceof Error ? tasks[i - 1].r(tmp) : tasks[i - 1].s(tmp)
+					tmp instanceof Error
+						? tasks[i - 1].r(tmp)
+						: tasks[i - 1].s(tmp)
 				);
 			}, reject);
 

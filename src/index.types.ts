@@ -28,7 +28,11 @@ assert<Promise<User>>(dldr.load(loadFn<{ id: string }, User>, { id: '123' }));
 // @ts-expect-error
 assert<Promise<User>>(dldr.load(loadFn<{ id: string }, User>, { id: 123 }));
 
-assert<Promise<User>>(dldr.load(loadFn<{ id: string }, User>, { id: '123' }, '123'));
+assert<Promise<User>>(
+	dldr.load(loadFn<{ id: string }, User>, { id: '123' }, '123'),
+);
 
-// @ts-expect-error
-assert<Promise<User>>(dldr.load(loadFn<{ id: string }, User>, { id: '123' }, 123));
+assert<Promise<User>>(
+	// @ts-expect-error
+	dldr.load(loadFn<{ id: string }, User>, { id: '123' }, 123),
+);
