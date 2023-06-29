@@ -39,13 +39,13 @@ packages:
     resolution: {integrity: sha512-8YnDaaf7N3k/q5HnTJVuzSyLETjoZjVmHc4AeKAzOvKHEFQKcn64OKBfzHYtE9zGjctNM7V9I0MfnUVLpi7M5g==}
     dev: false
 
-  /object-identity@0.0.6:
-    resolution: {integrity: sha512-5h112h/bIUVbPAUoNLbTCb2bpS8gJ3fJLqS8NJiEpNfa+0koq7X/C1GBhkcDiCiseS6dgc06Xe40BWxZyaySrw==}
+  /object-identity@0.1.2:
+    resolution: {integrity: sha512-Px5puVllX5L2aBjbcfXpiG5xXeq6OE8RckryTeP2Zq+0PgYrCGJXmC6LblWgknKSJs11Je2W4U2NOWFj3t/QXQ==}
     dev: false
 
   file:..:
     resolution: {directory: .., type: directory}
     name: dldr
     dependencies:
-      object-identity: 0.0.6
+      object-identity: 0.1.2
     dev: false

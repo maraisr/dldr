@@ -6,8 +6,8 @@ settings:
 
 dependencies:
   object-identity:
-    specifier: ^0.1.1
-    version: 0.1.1
+    specifier: ^0.1.2
+    version: 0.1.2
 
 devDependencies:
   '@marais/prettier':
@@ -29,8 +29,8 @@ devDependencies:
     specifier: 2.3.0
     version: 2.3.0
   typescript:
-    specifier: 5.1.3
-    version: 5.1.3
+    specifier: 5.1.6
+    version: 5.1.6
   uvu:
     specifier: 0.5.4
     version: 0.5.4
@@ -581,8 +581,8 @@ packages:
     engines: {node: ^8.0.0 || ^10.0.0 || ^12.0.0 || ^14.0.0 || ^16.0.0 || ^18.0.0 || >=20.0.0}
     dev: true
 
-  /object-identity@0.1.1:
-    resolution: {integrity: sha512-bGDnyTHjj3e9BVLkKoE9ldZny1ViWA6TP6ird/QyOZeyyETokPmKdlYExScqOe7q7b1UMJmo0HobBO2LPuHsKg==}
+  /object-identity@0.1.2:
+    resolution: {integrity: sha512-Px5puVllX5L2aBjbcfXpiG5xXeq6OE8RckryTeP2Zq+0PgYrCGJXmC6LblWgknKSJs11Je2W4U2NOWFj3t/QXQ==}
     dev: false
 
   /prettier@2.8.8:
@@ -634,8 +634,8 @@ packages:
       esbuild: 0.15.18
     dev: true
 
-  /typescript@5.1.3:
-    resolution: {integrity: sha512-XH627E9vkeqhlZFQuL+UsyAXEnibT0kWR2FWONlr4sTjvxyJYnyefgrkyECLzM5NenmKzRAy2rR/OlYLA1HkZw==}
+  /typescript@5.1.6:
+    resolution: {integrity: sha512-zaWCozRZ6DLEWAWFrVDz1H6FVXzUSfTy5FUMWsQlU8Ym5JP9eO4xkTIROFCQvhQf61z6O/G6ugw3SgAnvvm+HA==}
     engines: {node: '>=14.17'}
     hasBin: true
     dev: true

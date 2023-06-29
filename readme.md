@@ -210,13 +210,13 @@ const loadUser = load.bind(null, getUsers, new LRU(100));
 
 ## 💨 Benchmark
 
-> via the [`/bench`](/bench) directory with Node v16.20.0
+> via the [`/bench`](/bench) directory with Node v18.16.1
 
 ```
-✔ dldr             ~   606,857 ops/sec ± 2.86%
-✔ dldr/cache       ~ 1,017,029 ops/sec ± 0.78%
-✔ dataloader       ~   268,021 ops/sec ± 1.52%
-✔ dataloader/cache ~   145,043 ops/sec ± 0.88%
+✔ dldr             ~ 910,576 ops/sec ± 1.34%
+✔ dldr/cache       ~ 636,467 ops/sec ± 4.47%
+✔ dataloader       ~ 245,602 ops/sec ± 1.34%
+✔ dataloader/cache ~ 153,254 ops/sec ± 0.64%
 ```
 
 ## License
