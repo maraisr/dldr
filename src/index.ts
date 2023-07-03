@@ -11,9 +11,11 @@ export function load<T, K = string>(
 	identity: string = identify(key),
 ): Promise<T> {
 	let batch = batchContainer.get(loadFn);
+	let tasks: Task<T>[];
+	let keys: K[];
 
 	if (!batch) {
-		batchContainer.set(loadFn, (batch = new Map()));
+		batchContainer.set(loadFn, (batch = [[], (keys = []), (tasks = [])]));
 
 		// Once we know we have a fresh batch, we schedule this batch to run after
 		// all currently queued microtasks.
@@ -23,11 +25,7 @@ export function load<T, K = string>(
 			// any new requests for this batch will be added to a new batch.
 			batchContainer.delete(loadFn);
 
-			let tasks: Task<T>[] = [];
-			let keys: K[] = [];
 			let tmp, i;
-			for (tmp of batch!.values()) keys.push(tmp[0]), tasks.push(tmp[1]);
-
 			loadFn(keys).then(function (values) {
 				if (values.length !== tasks.length)
 					return reject(new Error('loader value length mismatch'));
@@ -42,22 +40,22 @@ export function load<T, K = string>(
 			}, reject);
 
 			function reject(error: Error) {
-				i = 0;
-				for (; (tmp = tasks[i++]); tmp.r(error));
+				for (i = 0; (tmp = tasks[i++]); tmp.r(error));
 			}
 		});
 	}
 
-	let b = batch.get(identity);
+	let b = batch[0]!.indexOf(identity);
 	// If the batch exists, return its promise, without enqueueing a new task.
-	if (b) return b[1].p;
+	if (~b) return batch[2][b].p;
 
-	let p = {} as Task<T>;
-	batch.set(identity, [key, p]);
+	let k = batch[0].push(identity) - 1;
+	let t = (batch[2][k] = {} as Task<T>);
+	batch[1][k] = key;
 
-	return (p.p = new Promise<T>(function (resolve, reject) {
-		p.s = resolve;
-		p.r = reject;
+	return (t.p = new Promise<T>(function (resolve, reject) {
+		t.s = resolve;
+		t.r = reject;
 	}));
 }
 
@@ -79,4 +77,4 @@ type Task<T> = {
 	r(e: Error): void;
 };
 
-type Batch<T, K> = Map<string, [key: K, task: Task<T>]>;
+type Batch<T, K> = [identies: string[], keys: K[], tasks: Task<T>[]];
