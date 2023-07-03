@@ -6,13 +6,16 @@
 
 </samp>
 
-**A tiny (367B) utility for batching and caching operations**
+**A tiny utility for batching and caching operations**
 
 <a href="https://npm-stat.com/charts.html?package=dldr">
-  <img src="https://badgen.net/npm/dm/dldr?labelColor=black&color=black&label=npm%20downloads" alt="js downloads">
+  <img src="https://badgen.net/npm/dm/dldr?color=black&label=npm%20downloads" alt="js downloads">
 </a>
-<a href="https://bundlephobia.com/result?p=dldr">
-  <img src="https://badgen.net/bundlephobia/minzip/dldr?labelColor=black&color=black" alt="size">
+<a href="https://unpkg.com/dldr/index.mjs">
+  <img src="https://img.badgesize.io/https://unpkg.com/dldr/index.mjs?compression=gzip&label=gzip&color=black" alt="gzip size" />
+</a>
+<a href="https://unpkg.com/dldr/index.mjs">
+  <img src="https://img.badgesize.io/https://unpkg.com/dldr/index.mjs?compression=brotli&label=brotli&color=black" alt="brotli size" />
 </a>
 
 <br />
