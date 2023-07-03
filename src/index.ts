@@ -1,14 +1,8 @@
 import type { LoadFn } from 'dldr';
 import { identify } from 'object-identity';
 
-type Task<T> = {
-	p: Promise<T>;
-	s(v: T): void;
-	r(e: Error): void;
-};
-
-type Batch<T, K> = Map<string, [key: K, task: Task<T>]>;
-
+// We keep a weakly held refernce to the user provided load function,
+// and batch all operations against that function.
 let batchContainer = new WeakMap<LoadFn<any, any>, Batch<any, any>>();
 
 export function load<T, K = string>(
@@ -21,7 +15,12 @@ export function load<T, K = string>(
 	if (!batch) {
 		batchContainer.set(loadFn, (batch = new Map()));
 
+		// Once we know we have a fresh batch, we schedule this batch to run after
+		// all currently queued microtasks.
 		queueMicrotask(function () {
+			// As soon as we start processing this batch, we need to delete this
+			// batch from our container. This is because we want to ensure that
+			// any new requests for this batch will be added to a new batch.
 			batchContainer.delete(loadFn);
 
 			let tasks: Task<T>[] = [];
@@ -33,9 +32,8 @@ export function load<T, K = string>(
 				if (values.length !== tasks.length)
 					return reject(new Error('loader value length mismatch'));
 
-				i = 0;
 				for (
-					;
+					i = 0;
 					(tmp = values[i++]), i <= values.length;
 					tmp instanceof Error
 						? tasks[i - 1].r(tmp)
@@ -51,6 +49,7 @@ export function load<T, K = string>(
 	}
 
 	let b = batch.get(identity);
+	// If the batch exists, return its promise, without enqueueing a new task.
 	if (b) return b[1].p;
 
 	let p = {} as Task<T>;
@@ -69,3 +68,15 @@ export function factory<T, K = string>(
 		return load(loadFn, key, identity);
 	};
 }
+
+// --
+
+type Task<T> = {
+	p: Promise<T>;
+	/** resolve */
+	s(v: T): void;
+	/** reject */
+	r(e: Error): void;
+};
+
+type Batch<T, K> = Map<string, [key: K, task: Task<T>]>;
