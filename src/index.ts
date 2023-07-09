@@ -20,18 +20,20 @@ export function load<T, K = string>(
 		// Once we know we have a fresh batch, we schedule this batch to run after
 		// all currently queued microtasks.
 		queueMicrotask(function () {
+			let tmp;
+			let i = 0;
+
 			// As soon as we start processing this batch, we need to delete this
 			// batch from our container. This is because we want to ensure that
 			// any new requests for this batch will be added to a new batch.
 			batchContainer.delete(loadFn);
 
-			let tmp, i;
 			loadFn(keys).then(function (values) {
 				if (values.length !== tasks.length)
 					return reject(new Error('loader value length mismatch'));
 
 				for (
-					i = 0;
+					;
 					(tmp = values[i++]), i <= values.length;
 					tmp instanceof Error
 						? tasks[i - 1].r(tmp)
@@ -40,7 +42,7 @@ export function load<T, K = string>(
 			}, reject);
 
 			function reject(error: Error) {
-				for (i = 0; (tmp = tasks[i++]); tmp.r(error));
+				for (; (tmp = tasks[i++]); tmp.r(error));
 			}
 		});
 	}
