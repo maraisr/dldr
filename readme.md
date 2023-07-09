@@ -18,8 +18,8 @@
   <img src="https://img.badgesize.io/https://unpkg.com/dldr/index.mjs?compression=brotli&label=brotli&color=black" alt="brotli size" />
 </a>
 
-<br />
-<br />
+<br>
+<br>
 
 <sup>
 
