@@ -1,10 +1,11 @@
 {
-  "extends": "@marais/tsconfig",
+  "extends": "./node_modules/@marais/tsconfig/tsconfig.json",
   "compilerOptions": {
     "baseUrl": ".",
+    "types": ["bun-types"],
     "paths": {
-      "dldr": ["src/index.d.ts"],
-      "dldr/*": ["src/*.d.ts"]
+      "dldr": ["src/index.d.ts", "src/index.ts"],
+      "dldr/*": ["src/*.d.ts", "src/*.ts"]
     }
   },
   "include": ["src", "test"],

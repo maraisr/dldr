@@ -37,7 +37,6 @@
     "bench": "node bench/index.js",
     "build": "bundt --minify",
     "format": "prettier --write .",
-    "test": "uvu src \".test.ts$\" -r tsm",
     "typecheck": "tsc --noEmit"
   },
   "prettier": "@marais/prettier",
@@ -47,12 +46,10 @@
   "devDependencies": {
     "@marais/prettier": "0.0.4",
     "@marais/tsconfig": "0.0.4",
+    "bun-types": "1.0.1",
     "bundt": "2.0.0-next.5",
-    "nanospy": "1.0.0",
     "prettier": "2.8.8",
-    "tsm": "2.3.0",
-    "typescript": "5.1.6",
-    "uvu": "0.5.4"
+    "typescript": "5.1.6"
   },
   "volta": {
     "node": "18.16.1"

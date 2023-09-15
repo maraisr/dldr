@@ -1,11 +1,9 @@
-import { spy } from 'nanospy';
-import { test } from 'uvu';
-import * as assert from 'uvu/assert';
+import { expect, mock, test } from 'bun:test';
 
 import * as dldr from './cache';
 
 test('should work with default cache', async () => {
-	const loader = spy((keys: string[]) => Promise.resolve(keys));
+	const loader = mock((keys: string[]) => Promise.resolve(keys));
 
 	// note for tests, we do pollute the global cache
 
@@ -15,14 +13,14 @@ test('should work with default cache', async () => {
 		dldr.load(loader, undefined, 'c'),
 	]);
 
-	assert.equal(loader.callCount, 1);
-	assert.equal(items[0], 'a');
-	assert.equal(items[1], 'b');
-	assert.equal(items[2], 'c');
+	expect(loader).toHaveBeenCalledTimes(1);
+	expect(items[0]).toEqual('a');
+	expect(items[1]).toEqual('b');
+	expect(items[2]).toEqual('c');
 });
 
 test('should work for passed tests', async () => {
-	const loader = spy((keys: string[]) => Promise.resolve(keys));
+	const loader = mock((keys: string[]) => Promise.resolve(keys));
 
 	const cache = new Map();
 
@@ -32,15 +30,15 @@ test('should work for passed tests', async () => {
 		dldr.load(loader, cache, 'c'),
 	]);
 
-	assert.equal(loader.callCount, 1);
-	assert.equal(items[0], 'a');
-	assert.equal(items[1], 'b');
-	assert.equal(items[2], 'c');
-	assert.equal(cache.size, 3);
+	expect(loader).toHaveBeenCalledTimes(1);
+	expect(items[0]).toEqual('a');
+	expect(items[1]).toEqual('b');
+	expect(items[2]).toEqual('c');
+	expect(cache.size).toEqual(3);
 });
 
 test('should return cached', async () => {
-	const loader = spy((keys: string[]) => Promise.resolve(keys));
+	const loader = mock((keys: string[]) => Promise.resolve(keys));
 
 	const cache = new Map();
 
@@ -50,71 +48,72 @@ test('should return cached', async () => {
 		dldr.load(loader, cache, 'c'),
 	]);
 
-	assert.equal(loader.callCount, 1);
-	assert.equal(items[0], 'a');
-	assert.equal(items[1], 'b');
-	assert.equal(items[2], 'c');
+	expect(loader).toHaveBeenCalledTimes(1);
+	expect(items[0]).toEqual('a');
+	expect(items[1]).toEqual('b');
+	expect(items[2]).toEqual('c');
 
 	const item = await dldr.load(loader, cache, 'a');
 
-	assert.equal(loader.callCount, 1);
-	assert.equal(item, 'a');
-	assert.equal(cache.size, 3);
+	expect(loader).toHaveBeenCalledTimes(1);
+	expect(item).toEqual('a');
+	expect(cache.size).toEqual(3);
 });
 
 test('on error should remove from cache', async () => {
-	const loader = spy(async (_keys: string[]) => [new Error('error')]);
+	const loader = mock(async (_keys: string[]) => [new Error('error')]);
 
 	const cache = new Map();
 
 	dldr.load(loader, cache, 'a');
-	assert.equal(cache.size, 1);
+	expect(cache.size).toEqual(1);
 
 	// @ts-ignore
 	await new Promise(setImmediate);
+	await new Promise(setImmediate);
 
-	assert.equal(loader.callCount, 1);
-	assert.equal(cache.size, 0);
+	expect(loader).toHaveBeenCalledTimes(1);
+	expect(cache.size).toEqual(0);
 });
 
 test('cache result should be referentially equal', async () => {
-	const loader = spy(async (keys: string[]) => keys.map((key) => ({ key })));
+	const loader = mock(async (keys: string[]) => keys.map((key) => ({ key })));
 
 	const cache = new Map();
 
 	const a = await dldr.load(loader, cache, 'a');
 	const b = await dldr.load(loader, cache, 'a');
 
-	assert.equal(a, { key: 'a' });
-	assert.is(a, b);
-	assert.equal(cache.size, 1);
+	expect(a).toEqual({ key: 'a' });
+	expect(a).toBe(b);
+	expect(cache.size).toEqual(1);
 });
 
 test('should use different cache between loaders (default)', async () => {
-	const loaderA = spy(async (keys: string[]) => keys);
-	const loaderB = spy(async (keys: string[]) => keys);
+	const loaderA = mock(async (keys: string[]) => keys);
+	const loaderB = mock(async (keys: string[]) => keys);
 
 	let item = await dldr.load(loaderA, undefined, 'a');
 
-	assert.equal(loaderA.callCount, 1);
-	assert.equal(loaderB.callCount, 0);
-	assert.equal(item, 'a');
+	expect(loaderA).toHaveBeenCalledTimes(1);
+	expect(loaderB).toHaveBeenCalledTimes(0);
+	expect(item).toEqual('a');
 
 	item = await dldr.load(loaderA, undefined, 'a');
 
-	assert.equal(loaderA.callCount, 1); // cached
-	assert.equal(loaderB.callCount, 0);
-	assert.equal(item, 'a');
+	expect(loaderA).toHaveBeenCalledTimes(1); // cached
+	expect(loaderB).toHaveBeenCalledTimes(0);
+	expect(item).toEqual('a');
 
 	item = await dldr.load(loaderB, undefined, 'a');
 
-	assert.equal(loaderA.callCount, 1);
-	assert.equal(loaderB.callCount, 1); // different loader
-	assert.equal(item, 'a');
+	expect(loaderA).toHaveBeenCalledTimes(1);
+	expect(loaderB).toHaveBeenCalledTimes(1); // different loader
+	expect(item).toEqual('a');
 });
 
 test('should support non string keys', async () => {
-	const loader = spy(async (keys: { x: number }[]) => keys);
+	const loader = mock(async (keys: { x: number }[]) => keys);
 
 	const cache = new Map();
 
@@ -125,13 +124,11 @@ test('should support non string keys', async () => {
 		dldr.load(loader, cache, { x: 1 }),
 	]);
 
-	assert.equal(loader.callCount, 1);
-	assert.equal(loader.calls[0], [[{ x: 1 }, { x: 2 }, { x: 3 }]]);
-	assert.equal(items[0], { x: 1 });
-	assert.equal(items[1], { x: 2 });
-	assert.equal(items[2], { x: 3 });
-	assert.equal(items[3], { x: 1 });
-	assert.equal(cache.size, 3);
+	expect(loader).toHaveBeenCalledTimes(1);
+	expect(loader.mock.calls[0]).toEqual([[{ x: 1 }, { x: 2 }, { x: 3 }]]);
+	expect(items[0]).toEqual({ x: 1 });
+	expect(items[1]).toEqual({ x: 2 });
+	expect(items[2]).toEqual({ x: 3 });
+	expect(items[3]).toEqual({ x: 1 });
+	expect(cache.size).toEqual(3);
 });
-
-test.run();
