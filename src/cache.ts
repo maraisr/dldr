@@ -18,3 +18,12 @@ export function load<T, K = string>(
 	prom.catch(() => cache!.delete(identity));
 	return prom;
 }
+
+export function factory<T, K = string>(
+	loadFn: LoadFn<T, K>,
+	cache?: MapLike<string, Promise<T>> | undefined,
+): (key: K, identity?: string | undefined) => Promise<T> {
+	return function (key: K, identity?: string | undefined) {
+		return load(loadFn, cache, key, identity);
+	};
+}

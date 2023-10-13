@@ -12,3 +12,8 @@ export function load<T, K = string>(
 	cache: MapLike<string, Promise<T>> | undefined,
 	key: K,
 ): Promise<T>;
+
+export function factory<T, K = string>(
+	loadFn: LoadFn<T, K>,
+	cache?: MapLike<string, Promise<T>> | undefined,
+): (key: K, identity?: string | undefined) => Promise<T>;
