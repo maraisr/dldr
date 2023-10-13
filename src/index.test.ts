@@ -30,6 +30,11 @@ function trackPromise<T extends Promise<any>>(promise: T) {
 	};
 }
 
+test('api', () => {
+	assert.type(dldr.load, 'function');
+	assert.type(dldr.factory, 'function');
+});
+
 test('should work', async () => {
 	const loader = spy((keys: string[]) => Promise.resolve(keys));
 

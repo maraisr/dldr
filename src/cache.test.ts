@@ -4,6 +4,11 @@ import * as assert from 'uvu/assert';
 
 import * as dldr from './cache';
 
+test('api', () => {
+	assert.type(dldr.load, 'function');
+	assert.type(dldr.factory, 'function');
+});
+
 test('should work with default cache', async () => {
 	const loader = spy((keys: string[]) => Promise.resolve(keys));
 
