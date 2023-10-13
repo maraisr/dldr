@@ -69,7 +69,7 @@ export function factory<T, K = string>(
 	};
 }
 
-// --
+// ---
 
 type Task<T> = {
 	p: Promise<T>;
