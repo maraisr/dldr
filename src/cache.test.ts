@@ -139,4 +139,17 @@ test('should support non string keys', async () => {
 	assert.equal(cache.size, 3);
 });
 
+test('factory works', async () => {
+	const loader = spy((keys: string[]) => Promise.resolve(keys));
+
+	const l = dldr.factory(loader, new Map());
+
+	const items = await Promise.all([l('a'), l('b'), l('c')]);
+
+	assert.equal(loader.callCount, 1);
+	assert.equal(items[0], 'a');
+	assert.equal(items[1], 'b');
+	assert.equal(items[2], 'c');
+});
+
 test.run();

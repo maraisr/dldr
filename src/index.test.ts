@@ -302,5 +302,18 @@ test('2 loaders nested in a .then chain', async () => {
 	assert.equal(loader.calls[1], [['b', 'd']]);
 });
 
+test('factory works', async () => {
+	const loader = spy((keys: string[]) => Promise.resolve(keys));
+
+	const l = dldr.factory(loader);
+
+	const items = await Promise.all([l('a'), l('b'), l('c')]);
+
+	assert.equal(loader.callCount, 1);
+	assert.equal(items[0], 'a');
+	assert.equal(items[1], 'b');
+	assert.equal(items[2], 'c');
+});
+
 test.run();
 errors.run();
