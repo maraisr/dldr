@@ -5,12 +5,9 @@ import { identify } from 'object-identity';
 // and batch all operations against that function.
 let batchContainer = new WeakMap<LoadFn<any, any>, Batch<any, any>>();
 
-export function load<T, K = string>(
-	loadFn: LoadFn<T, K>,
-	key: K,
-	identity: string = identify(key),
-): Promise<T> {
+export function load<T, K = string>(loadFn: LoadFn<T, K>, key: K, identity = identify(key)): Promise<T> {
 	let batch = batchContainer.get(loadFn);
+
 	let tasks: Task<T>[];
 	let keys: K[];
 
@@ -20,8 +17,7 @@ export function load<T, K = string>(
 		// Once we know we have a fresh batch, we schedule this batch to run after
 		// all currently queued microtasks.
 		queueMicrotask(function () {
-			let tmp;
-			let i = 0;
+			let tmp, i = 0;
 
 			// As soon as we start processing this batch, we need to delete this
 			// batch from our container. This is because we want to ensure that
@@ -32,9 +28,7 @@ export function load<T, K = string>(
 				if (values.length !== tasks.length)
 					return reject(new Error('loader value length mismatch'));
 
-				for (
-					;
-					(tmp = values[i++]), i <= values.length;
+				for (; (tmp = values[i++]), i <= values.length;
 					tmp instanceof Error
 						? tasks[i - 1].r(tmp)
 						: tasks[i - 1].s(tmp)
@@ -61,9 +55,7 @@ export function load<T, K = string>(
 	}));
 }
 
-export function factory<T, K = string>(
-	loadFn: LoadFn<T, K>,
-): (key: K, identity?: string | undefined) => Promise<T> {
+export function factory<T, K = string>(loadFn: LoadFn<T, K>) {
 	return function (key: K, identity?: string | undefined) {
 		return load(loadFn, key, identity);
 	};
