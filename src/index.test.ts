@@ -288,6 +288,22 @@ errors('rejects all promises for the same key', async () => {
 	assert.instance(items[2].error, Error);
 });
 
+errors('ensure the `.catch` is ran for length mismatch', async () => {
+	const loader = spy(async (keys: string[]) => keys.slice(0, 1));
+	const e = spy((e) => e);
+
+	const items = await Promise.all([
+		dldr.load(loader, 'a').catch(e),
+		dldr.load(loader, 'b').catch(e),
+		dldr.load(loader, 'c').catch(e)
+	]);
+
+	assert.equal(loader.callCount, 1);
+	assert.equal(loader.calls[0], [['a', 'b', 'c']]);
+	assert.equal(e.callCount, 3);
+	assert.instance(items[0], TypeError);
+});
+
 test('2 loaders nested in a .then chain', async () => {
 	const loader = spy(async (keys: string[]) => keys);
 
