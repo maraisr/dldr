@@ -242,9 +242,9 @@ errors('throw if values length mismatch', async () => {
 	assert.instance(loader.results[0], Promise);
 	assert.equal(await loader.results[0], ['a']);
 
-	assert.instance(items[0].error, Error);
-	assert.instance(items[1].error, Error);
-	assert.instance(items[2].error, Error);
+	assert.instance(items[0].error, TypeError);
+	assert.instance(items[1].error, TypeError);
+	assert.instance(items[2].error, TypeError);
 });
 
 errors('reject load if loader rejects that key', async () => {

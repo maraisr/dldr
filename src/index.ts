@@ -26,7 +26,7 @@ export function load<T, K = string>(loadFn: LoadFn<T, K>, key: K, identity = ide
 
 			loadFn(keys).then(function (values) {
 				if (values.length !== tasks.length)
-					return reject(new Error('loader value length mismatch'));
+					return reject(new TypeError('same length mismatch'));
 
 				for (; (tmp = values[i++]), i <= values.length;
 					tmp instanceof Error
