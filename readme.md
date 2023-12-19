@@ -50,7 +50,7 @@ the unique keys that have been requested.
 import { load } from 'dldr';
 
 // ⬇️ define some arbitary load method that accepts a single argument array of keys
-const getPosts = (keys: string[]) => db.execute('SELECT id, name FROM posts WHERE id IN (?)', [keys]);
+const getPosts = (keys) => sql`SELECT id, name FROM posts WHERE id IN (${keys})`;
 
 // .. for convenience, you could bind
 const loadPost = load.bind(null, getPosts);
@@ -130,7 +130,6 @@ import { getPosts } from './example';
 // operates the same as the above, but will cache the results of the load method
 
 const cache = new Map();
-
 const loadPost = load.bind(null, getPosts, cache);
 // note; cache is optional, and will be created if not provided
 
@@ -165,7 +164,8 @@ The main entry point to start batching your calls.
 ```ts
 function load<T>(
   loadFn: (keys: string[]) => Promise<(T | Error)[]>,
-  key: string
+  key: string,
+  identityKey?: string,
 ): Promise<T>;
 ```
 <!-- prettier-ignore-end -->
@@ -187,6 +187,7 @@ function load<T>(
   loadFn: (keys: string[]) => Promise<(T | Error)[]>,
   cache: MapLike<string, T> | undefined,
   key: string,
+  identityKey?: string,
 ): Promise<T>;
 ```
 
