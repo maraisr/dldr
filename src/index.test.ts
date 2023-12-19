@@ -295,7 +295,7 @@ errors('ensure the `.catch` is ran for length mismatch', async () => {
 	const items = await Promise.all([
 		dldr.load(loader, 'a').catch(e),
 		dldr.load(loader, 'b').catch(e),
-		dldr.load(loader, 'c').catch(e)
+		dldr.load(loader, 'c').catch(e),
 	]);
 
 	assert.equal(loader.callCount, 1);
