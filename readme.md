@@ -11,6 +11,9 @@
 <a href="https://npm-stat.com/charts.html?package=dldr">
   <img src="https://badgen.net/npm/dm/dldr?color=black&label=npm%20downloads" alt="js downloads">
 </a>
+<a href="https://licenses.dev/npm/dldr">
+  <img src="https://licenses.dev/b/npm/dldr?style=dark" alt="licenses" />
+</a>
 <a href="https://unpkg.com/dldr/index.mjs">
   <img src="https://img.badgesize.io/https://unpkg.com/dldr/index.mjs?compression=gzip&label=gzip&color=black" alt="gzip size" />
 </a>
