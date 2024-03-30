@@ -1,3 +1,25 @@
+/**
+ * @module
+ *
+ * This module provides a simple API for batching operations. You create a {@link LoadFn loader} function, and then use the {@link load} function to load values for a given key.
+ *
+ * @example
+ * ```ts
+ * async function loader(keys: string[]) {
+ *   // expect keys to be ['bar', 'baz'] (deduped)
+ *   return keys.map(key => 'foo' + key);
+ * }
+ *
+ * const values = await Promise.all([
+ *   load(loader, 'bar'),
+ *   load(loader, 'bar'),
+ *   load(loader, 'baz'),
+ * ]);
+ *
+ * console.log(values); // ['foobar', 'foobar', 'foobaz']
+ * ```
+ */
+
 import { identify } from 'object-identity';
 
 /**

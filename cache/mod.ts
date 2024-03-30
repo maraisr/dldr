@@ -1,5 +1,37 @@
-import * as dldr from '../mod.ts';
+/**
+ * @module
+ *
+ * This module provides a simple API for batching operations, and caching their results. You create a {@link LoadFn loader} function, and then use the {@link load} function to load values for a given key.
+ *
+ * @example
+ * ```ts
+ * async function loader(keys: string[]) {
+ *   return keys.map(key => 'foo' + key);
+ * }
+ *
+ * const values = await Promise.all([
+ *   load(loader, 'bar'),
+ *   load(loader, 'bar'),
+ *   load(loader, 'baz'),
+ * ]);
+ *
+ * expect(loader).toHaveBeenCalledWith(['bar', 'baz']);
+ * console.log(values); // ['foobar', 'foobar', 'foobaz']
+ *
+ * const values = await Promise.all([
+ *   load(loader, 'bar'),
+ *   load(loader, 'baz'),
+ *   load(loader, 'zig'),
+ * ]);
+ *
+ * expect(loader).toHaveBeenCalledWith(['zig']); // bar baz have been cached
+ * console.log(values); // ['foobar', 'foobaz', 'foozig']
+ * ```
+ */
+
 import { identify } from 'object-identity';
+
+import * as dldr from '../mod.ts';
 
 export type MapLike<K, V> = {
 	get(key: K): V | undefined;
