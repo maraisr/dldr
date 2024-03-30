@@ -1,7 +1,0 @@
-*-lock.yaml
-/index.*
-/cache.*
-
-/src/*
-!/src/*.test.ts
-!/src/*.types.ts

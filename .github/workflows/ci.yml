@@ -2,42 +2,33 @@ name: CI
 
 on:
   push:
-    branches: [main]
-  pull_request: {}
+  workflow_call:
 
 jobs:
-  test:
-    name: Node.js v${{ matrix.node }}
+  deno:
     runs-on: ubuntu-latest
-    strategy:
-      matrix:
-        node: [16, 18, 20]
     steps:
-      - uses: actions/checkout@main
+      - uses: actions/checkout@v3
 
-      - name: (env) setup node v${{ matrix.node }}
-        uses: actions/setup-node@main
+      - uses: denoland/setup-deno@v1
         with:
-          node-version: ${{ matrix.node }}
-          check-latest: true
+          deno-version: v1.x
 
-      - name: (env) setup bun
-        uses: oven-sh/setup-bun@v1
+      - run: deno fmt --check
+      - run: deno lint
+      - run: deno check **/*.ts
+
+      - name: Tests
+        run: |-
+          deno test --coverage=cov/
+          deno coverage cov/
+
+  npm:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - uses: denoland/setup-deno@v1
         with:
-          bun-version: 1.0.0
+          deno-version: v1.x
 
-      - name: (env) cache
-        uses: actions/cache@v3
-        with:
-          path: ~/.bun/install/cache
-          key: ${{ runner.os }}-${{ matrix.node }}-${{ hashFiles('**/package.json') }}
-          restore-keys: ${{ runner.os }}-${{ matrix.node }}-
-
-      - name: (env) globals
-        run: bun add -g oxlint
-
-      - run: bun install
-      - run: oxlint .
-      - run: bun run build
-      - run: bun run typecheck
-      - run: npm run test
+      - run: deno task build

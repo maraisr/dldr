@@ -2,24 +2,11 @@
 
 <samp>
 
-# dldr
+# dldr [![licenses](https://licenses.dev/b/npm/dldr?style=dark)](https://licenses.dev/npm/dldr)
 
 </samp>
 
 **A tiny utility for batching and caching operations**
-
-<a href="https://npm-stat.com/charts.html?package=dldr">
-  <img src="https://badgen.net/npm/dm/dldr?color=black&label=npm%20downloads" alt="js downloads">
-</a>
-<a href="https://licenses.dev/npm/dldr">
-  <img src="https://licenses.dev/b/npm/dldr?style=dark" alt="licenses" />
-</a>
-<a href="https://unpkg.com/dldr/index.mjs">
-  <img src="https://img.badgesize.io/https://unpkg.com/dldr/index.mjs?compression=gzip&label=gzip&color=black" alt="gzip size" />
-</a>
-<a href="https://unpkg.com/dldr/index.mjs">
-  <img src="https://img.badgesize.io/https://unpkg.com/dldr/index.mjs?compression=brotli&label=brotli&color=black" alt="brotli size" />
-</a>
 
 <br>
 <br>
@@ -37,6 +24,9 @@ This is free to use software, but if you do like it, consisder supporting me ❤
 
 ## ⚙️ Install
 
+> Avaliable on [jsr](https://jsr.io/@mr/dataloader), [NPM](https://npmjs.com/package/dldr) and
+> [deno.land](https://deno.land/x/dataloader)
+
 ```shell
 npm add dldr
 ```
@@ -46,8 +36,8 @@ npm add dldr
 The default module will batch calls to your provided `loadFn` witin the current tick.
 
 Under the hood we schedule a function with
-[`queueMicrotask`](https://developer.mozilla.org/en-US/docs/Web/API/queueMicrotask). That then calls your `loadFn` with
-the unique keys that have been requested.
+[`queueMicrotask`](https://developer.mozilla.org/en-US/docs/Web/API/queueMicrotask). That then calls
+your `loadFn` with the unique keys that have been requested.
 
 ```ts
 import { load } from 'dldr';
@@ -60,9 +50,9 @@ const loadPost = load.bind(null, getPosts);
 
 // ⬇️ demo some collection that is built up over time.
 const posts = [
-  load(getPosts, '123'),
-  loadPost('123'), // functionally equivalent to the above
-  load(getPosts, '456'),
+	load(getPosts, '123'),
+	loadPost('123'), // functionally equivalent to the above
+	load(getPosts, '456'),
 ];
 
 // ...
@@ -74,10 +64,10 @@ const loaded = await Promise.all(posts);
 
 expect(getPosts).toHaveBeenCalledWith(['123', '456', '789']);
 expect(loaded).toEqual([
-  { id: '123', name: '123' },
-  { id: '123', name: '123' },
-  { id: '456', name: '456' },
-  { id: '789', name: '789' },
+	{ id: '123', name: '123' },
+	{ id: '123', name: '123' },
+	{ id: '456', name: '456' },
+	{ id: '789', name: '789' },
 ]);
 ```
 
@@ -87,7 +77,7 @@ expect(loaded).toEqual([
 
 ```ts
 import { load } from 'dldr';
-import { graphql, buildSchema } from 'graphql';
+import { buildSchema, graphql } from 'graphql';
 
 const schema = buildSchema(`
     type Query {
@@ -101,22 +91,22 @@ const operation = `{
 }`;
 
 const results = await graphql({
-  schema,
-  source: operation,
-  contextValue: {
-    getUser: load.bind(null, async (names) => {
-      // Assume youre calling out to a db or something
-      const result = names.map((name) => name);
+	schema,
+	source: operation,
+	contextValue: {
+		getUser: load.bind(null, async (names) => {
+			// Assume youre calling out to a db or something
+			const result = names.map((name) => name);
 
-      // lets pretend this is a promise
-      return Promise.resolve(result);
-    }),
-  },
-  rootValue: {
-    me: ({ name }, ctx) => {
-      return ctx.getUser(name);
-    },
-  },
+			// lets pretend this is a promise
+			return Promise.resolve(result);
+		}),
+	},
+	rootValue: {
+		me: ({ name }, ctx) => {
+			return ctx.getUser(name);
+		},
+	},
 });
 ```
 
@@ -137,17 +127,17 @@ const loadPost = load.bind(null, getPosts, cache);
 // note; cache is optional, and will be created if not provided
 
 const posts = Promise.all([
-  load(getPosts, cache, '123'),
-  loadPost('123'), // will be cached, and functionally equivalent to the above
-  loadPost('456'),
+	load(getPosts, cache, '123'),
+	loadPost('123'), // will be cached, and functionally equivalent to the above
+	loadPost('456'),
 ]);
 
 expect(getPosts).toHaveBeenCalledTimes(1);
 expect(getPosts).toHaveBeenCalledWith(['123', '456']);
 expect(loaded).toEqual([
-  { id: '123', name: '123' },
-  { id: '123', name: '123' },
-  { id: '456', name: '456' },
+	{ id: '123', name: '123' },
+	{ id: '123', name: '123' },
+	{ id: '456', name: '456' },
 ]);
 
 // ⬇️ the cache will be used for subsequent calls
@@ -164,13 +154,15 @@ expect(post).toEqual({ id: '123', name: '123' });
 The main entry point to start batching your calls.
 
 <!-- prettier-ignore-start -->
+
 ```ts
 function load<T>(
-  loadFn: (keys: string[]) => Promise<(T | Error)[]>,
-  key: string,
-  identityKey?: string,
+	loadFn: (keys: string[]) => Promise<(T | Error)[]>,
+	key: string,
+	identityKey?: string,
 ): Promise<T>;
 ```
+
 <!-- prettier-ignore-end -->
 
 > **Note** Might be worth calling `.bind` if you dont want to pass your loader everywhere.
@@ -187,10 +179,10 @@ A submodule that will cache the results of your `loadFn` between ticks.
 
 ```ts
 function load<T>(
-  loadFn: (keys: string[]) => Promise<(T | Error)[]>,
-  cache: MapLike<string, T> | undefined,
-  key: string,
-  identityKey?: string,
+	loadFn: (keys: string[]) => Promise<(T | Error)[]>,
+	cache: MapLike<string, T> | undefined,
+	key: string,
+	identityKey?: string,
 ): Promise<T>;
 ```
 
@@ -198,8 +190,8 @@ function load<T>(
 
 **_Self managed cache_**
 
-We explicitly do not handle mutations, so if you wish to retrieve fresh entries, or have a primed cache we recommend you
-do so yourself. All we require is a `Map` like object.
+We explicitly do not handle mutations, so if you wish to retrieve fresh entries, or have a primed
+cache we recommend you do so yourself. All we require is a `Map` like object.
 
 Commonly an LRU cache is used, we recommend [`tmp-cache`](https://github.com/lukeed/tmp-cache).
 

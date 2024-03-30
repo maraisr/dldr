@@ -1,0 +1,38 @@
+{
+  "version": "3",
+  "packages": {
+    "specifiers": {
+      "jsr:@mr/object-identity": "jsr:@mr/object-identity@0.1.2",
+      "npm:@marais/bench": "npm:@marais/bench@0.0.8",
+      "npm:dataloader": "npm:dataloader@2.2.2"
+    },
+    "jsr": {
+      "@mr/object-identity@0.1.2": {
+        "integrity": "18e50582c702c0f532dc9eb3cd93549cc0574522312786355adba9061f4fc7ce"
+      }
+    },
+    "npm": {
+      "@marais/bench@0.0.8": {
+        "integrity": "sha512-DZ3TqK1eUN77E2nV2Aj2aady61rveJGqGAPNQglzoJL001HJq9elFLRS6pw25e6geIEmRld9cJ5F/EHFUYa+DQ==",
+        "dependencies": {
+          "@thi.ng/bench": "@thi.ng/bench@3.5.1"
+        }
+      },
+      "@thi.ng/api@8.9.31": {
+        "integrity": "sha512-YuodNQ4TnxV8OIa8xiF9JQ+vBam16W3Z9EbTAAgX/VlQUQ7NEVBbFO8eNGcpyrfOoWdSX4b9JcPbAXuB1dfg1g==",
+        "dependencies": {}
+      },
+      "@thi.ng/bench@3.5.1": {
+        "integrity": "sha512-ekueeRFmWdXiCB9vnZxzOXKJ9s6ol3injV79hHZXrL+XqjPiP9VyX4fnVvQ/vTCzR27+wYM8fbz3S1veUEF84w==",
+        "dependencies": {
+          "@thi.ng/api": "@thi.ng/api@8.9.31"
+        }
+      },
+      "dataloader@2.2.2": {
+        "integrity": "sha512-8YnDaaf7N3k/q5HnTJVuzSyLETjoZjVmHc4AeKAzOvKHEFQKcn64OKBfzHYtE9zGjctNM7V9I0MfnUVLpi7M5g==",
+        "dependencies": {}
+      }
+    }
+  },
+  "remote": {}
+}
