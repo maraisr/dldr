@@ -32,5 +32,13 @@
 	},
 	"exclude": [
 		"npm"
-	]
+	],
+	"publish": {
+		"include": [
+			"mod.ts",
+			"cache/mod.ts",
+			"license",
+			"readme.md"
+		]
+	}
 }
