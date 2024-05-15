@@ -8,15 +8,12 @@ jobs:
   deno:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3
-
+      - uses: actions/checkout@v4
       - uses: denoland/setup-deno@v1
-        with:
-          deno-version: v1.x
 
       - run: deno fmt --check
       - run: deno lint
-      - run: deno check **/*.ts
+      - run: deno check **.ts
 
       - name: Tests
         run: |-
@@ -26,9 +23,8 @@ jobs:
   npm:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
       - uses: denoland/setup-deno@v1
-        with:
-          deno-version: v1.x
 
+      - run: mkdir -p npm
       - run: deno task build
