@@ -16,5 +16,8 @@
 			"import": "./cache.mjs"
 		},
 		"./package.json": "./package.json"
+	},
+	"dependencies": {
+		"object-identity": "^0.1"
 	}
 }
