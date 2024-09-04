@@ -31,7 +31,7 @@
 
 import { identify } from 'object-identity';
 
-import * as dldr from '../mod.ts';
+import * as dldr from './mod.ts';
 
 export type MapLike<K, V> = {
 	get(key: K): V | undefined;

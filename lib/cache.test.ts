@@ -2,7 +2,7 @@ import { assert, assertEquals, assertInstanceOf } from '@std/assert';
 import { spy } from 'npm:nanospy';
 import { setImmediate } from 'node:timers/promises';
 
-import * as dldr from './mod.ts';
+import * as dldr from './cache.ts';
 
 Deno.test('api', () => {
 	assertInstanceOf(dldr.load, Function);
