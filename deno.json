@@ -9,7 +9,6 @@
 		"build": "deno run -A scripts/build.ts"
 	},
 	"imports": {
-		"@deno/dnt": "jsr:@deno/dnt@^0.41.1",
 		"@std/assert": "jsr:@std/assert@^1",
 		"@std/path": "jsr:@std/path@^1",
 		"object-identity": "jsr:@mr/object-identity@^0.1"
