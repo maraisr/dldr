@@ -24,12 +24,8 @@ This is free to use software, but if you do like it, consisder supporting me ❤
 
 ## ⚙️ Install
 
-> Avaliable on [jsr](https://jsr.io/@mr/dataloader), [NPM](https://npmjs.com/package/dldr) and
-> [deno.land](https://deno.land/x/dataloader)
-
-```shell
-npm add dldr
-```
+- **npm** — available as [`dldr`](https://www.npmjs.com/package/dldr)
+- **JSR** — available as [`@mr/dataloader`](https://jsr.io/@mr/dataloader)
 
 ## 🚀 Usage
 
@@ -207,17 +203,6 @@ const loadUser = load.bind(null, getUsers, new LRU(100));
 ```
 
 </details>
-
-## 💨 Benchmark
-
-> via the [`/bench`](/bench) directory with Node v18.16.1
-
-```
-✔ dldr             ~ 910,576 ops/sec ± 1.34%
-✔ dldr/cache       ~ 636,467 ops/sec ± 4.47%
-✔ dataloader       ~ 245,602 ops/sec ± 1.34%
-✔ dataloader/cache ~ 153,254 ops/sec ± 0.64%
-```
 
 ## License
 
