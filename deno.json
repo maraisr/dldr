@@ -11,7 +11,9 @@
 	"imports": {
 		"@std/assert": "jsr:@std/assert@^1",
 		"@std/path": "jsr:@std/path@^1",
-		"object-identity": "jsr:@mr/object-identity@^0.1"
+		"object-identity": "jsr:@mr/object-identity@^0.1",
+
+		"dldr": "./lib/mod.ts"
 	},
 	"lock": false,
 	"lint": {
