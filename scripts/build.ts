@@ -1,6 +1,14 @@
 // Credit @lukeed https://github.com/lukeed/empathic/blob/main/scripts/build.ts
 
-import oxc from 'npm:oxc-transform@^0.25';
+// Publish:
+//   -> edit package.json version
+//   -> edit deno.json version
+//   $ git commit "release: x.x.x"
+//   $ git tag "vx.x.x"
+//   $ git push origin main --tags
+//   #-> CI builds w/ publish
+
+import oxc from 'npm:oxc-transform@^0.30';
 import { join, resolve } from '@std/path';
 
 import denoJson from '../deno.json' with { type: 'json' };
@@ -21,7 +29,9 @@ async function transform(name: string, filename: string) {
 	let xform = oxc.transform(entry, source, {
 		typescript: {
 			onlyRemoveTypeImports: true,
-			declaration: true,
+			declaration: {
+				stripInternal: true,
+			},
 		},
 	});
 
@@ -33,7 +43,7 @@ async function transform(name: string, filename: string) {
 
 	outfile = `${outdir}/${name}.mjs`;
 	console.log('> writing "%s" file', outfile);
-	await Deno.writeTextFile(outfile, xform.sourceText);
+	await Deno.writeTextFile(outfile, xform.code);
 }
 
 if (exists(outdir)) {
