@@ -1,6 +1,7 @@
 {
 	"version": "0.0.11",
 	"name": "@mr/dataloader",
+	"license": "MIT",
 	"exports": {
 		".": "./lib/mod.ts",
 		"./cache": "./lib/cache.ts"
