@@ -46,15 +46,14 @@ async function transform(name: string, filename: string) {
 	await Deno.writeTextFile(outfile, xform.code);
 }
 
-if (exists(outdir)) {
-	console.log('! removing "npm" directory');
-	await Deno.remove(outdir, { recursive: true });
-}
-await Deno.mkdir(outdir);
+console.log('! cleaning "npm" directory');
+await new Deno.Command('git', {
+	args: ['clean', '-xfd', outdir],
+	stderr: 'inherit',
+}).output();
 
 for (let [name, filename] of Object.entries(Inputs)) await transform(name, filename);
 
-await copy('package.json');
 await copy('readme.md');
 await copy('license');
 
