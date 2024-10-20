@@ -2,8 +2,8 @@ name: CI
 
 on:
   push:
-    branches: ["**"]
-    tags: ["v**"]
+    branches: ['**']
+    tags: ['v**']
 
 env:
   DENO_VERSION: 2.0.2
@@ -27,7 +27,7 @@ jobs:
 
   dryrun:
     needs: [health]
-    name: "Publish (dry run)"
+    name: 'Publish (dry run)'
     if: ${{ !startsWith(github.ref, 'refs/tags/v') }}
     runs-on: ubuntu-latest
     steps:
@@ -38,7 +38,7 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: 20
-          registry-url: "https://registry.npmjs.org"
+          registry-url: 'https://registry.npmjs.org'
 
       - run: deno task build
       - run: npm publish --dry-run
@@ -63,22 +63,22 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: 20
-          registry-url: "https://registry.npmjs.org"
+          registry-url: 'https://registry.npmjs.org'
 
       - run: deno task build
 
-      - name: "Publish → jsr"
+      - name: 'Publish → jsr'
         if: ${{ !contains(github.ref, '-next.') }}
         run: deno publish --no-check
 
-      - name: "Publish → npm"
+      - name: 'Publish → npm'
         if: ${{ !contains(github.ref, '-next.') }}
         run: npm publish --provenance --access public
         working-directory: npm
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
 
-      - name: "Publish → npm (pre-release)"
+      - name: 'Publish → npm (pre-release)'
         if: ${{ contains(github.ref, '-next.') }}
         run: npm publish --tag next --provenance --access public
         working-directory: npm
