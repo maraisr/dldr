@@ -4,7 +4,7 @@
 	"repository": "maraisr/dldr",
 	"description": "A tiny utility for batching and caching operations",
 	"license": "MIT",
-	"author": "Marais Rossow <me@marais.dev> (https://marais.io)",
+	"author": "Marais Rossouw <me@marais.dev> (https://marais.io)",
 	"sideEffects": false,
 	"exports": {
 		".": {
