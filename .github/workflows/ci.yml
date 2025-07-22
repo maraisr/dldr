@@ -6,7 +6,7 @@ on:
     tags: ['v**']
 
 env:
-  DENO_VERSION: 2.0.2
+  DENO_VERSION: 2.4.2
 
 jobs:
   health:
