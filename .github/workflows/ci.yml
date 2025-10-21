@@ -75,12 +75,8 @@ jobs:
         if: ${{ !contains(github.ref, '-next.') }}
         run: npm publish --provenance --access public
         working-directory: npm
-        env:
-          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
 
       - name: 'Publish → npm (pre-release)'
         if: ${{ contains(github.ref, '-next.') }}
         run: npm publish --tag next --provenance --access public
         working-directory: npm
-        env:
-          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
