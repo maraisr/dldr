@@ -1,6 +1,4 @@
 /**
- * @module
- *
  * This module provides a simple API for batching operations, and caching their results. You create a {@link LoadFn loader} function, and then use the {@link load} function to load values for a given key.
  *
  * @example
@@ -27,6 +25,8 @@
  * expect(loader).toHaveBeenCalledWith(['zig']); // bar baz have been cached
  * console.log(values); // ['foobar', 'foobaz', 'foozig']
  * ```
+ *
+ * @module
  */
 
 import { identify } from 'object-identity';
@@ -43,7 +43,7 @@ export type MapLike<K, V> = {
 const container = new WeakMap<dldr.LoadFn<any, any>, Map<string, Promise<any>>>();
 
 /**
- * Is identiacal to @see {@link dldr.load} but with a cache parameter. Entries that exist in this cache will be returned and not forwarded to the loader function.
+ * Is identical to @see {@link dldr.load} but with a cache parameter. Entries that exist in this cache will be returned and not forwarded to the loader function.
  *
  * @extends dldr.LoadFn
  */

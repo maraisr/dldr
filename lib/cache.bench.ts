@@ -1,4 +1,6 @@
-import DataLoader from 'npm:dataloader';
+// deno-lint-ignore-file no-import-prefix
+
+import DataLoader from 'npm:dataloader@^2';
 
 import type { LoadFn } from './mod.ts';
 import * as dldr from './cache.ts';

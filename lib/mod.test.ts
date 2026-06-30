@@ -1,5 +1,5 @@
 import { assertEquals, assertInstanceOf } from '@std/assert';
-import { spy } from 'npm:nanospy';
+import { spy } from 'nanospy';
 import { setImmediate } from 'node:timers/promises';
 
 import * as dldr from './mod.ts';

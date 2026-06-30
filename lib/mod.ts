@@ -1,6 +1,4 @@
 /**
- * @module
- *
  * This module provides a simple API for batching operations. You create a {@link LoadFn loader} function, and then use the {@link load} function to load values for a given key.
  *
  * @example
@@ -18,6 +16,8 @@
  *
  * console.log(values); // ['foobar', 'foobar', 'foobaz']
  * ```
+ *
+ * @module
  */
 
 import { identify } from 'object-identity';
@@ -33,7 +33,7 @@ import { identify } from 'object-identity';
  */
 export type LoadFn<T, K = string> = (keys: K[]) => Promise<(T | Error)[]>;
 
-// We keep a weakly held refernce to the user provided load function,
+// We keep a weakly held reference to the user provided load function,
 // and batch all operations against that function.
 let batchContainer = new WeakMap<LoadFn<any, any>, Batch<any, any>>();
 

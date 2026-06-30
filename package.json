@@ -1,19 +1,23 @@
 {
 	"name": "dldr",
 	"version": "0.0.11",
-	"repository": "maraisr/dldr",
+	"repository": {
+		"type": "git",
+		"url": "git+https://github.com/maraisr/dldr.git"
+	},
 	"description": "A tiny utility for batching and caching operations",
 	"license": "MIT",
 	"author": "Marais Rossouw <me@marais.dev> (https://marais.io)",
+	"type": "module",
 	"sideEffects": false,
 	"exports": {
 		".": {
-			"types": "./index.d.mts",
-			"import": "./index.mjs"
+			"types": "./index.d.ts",
+			"import": "./index.js"
 		},
 		"./cache": {
-			"types": "./cache.d.mts",
-			"import": "./cache.mjs"
+			"types": "./cache.d.ts",
+			"import": "./cache.js"
 		},
 		"./package.json": "./package.json"
 	},

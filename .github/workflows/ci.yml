@@ -6,15 +6,15 @@ on:
     tags: ['v**']
 
 env:
-  DENO_VERSION: 2.4.2
+  DENO_VERSION: 2.8.3
 
 jobs:
   health:
-    name: Health
-    runs-on: ubuntu-latest
+    name: health
+    runs-on: ubuntu-24.04-arm
     steps:
-      - uses: actions/checkout@v4
-      - uses: denoland/setup-deno@v1
+      - uses: actions/checkout@df4cb1c069e1874edd31b4311f1884172cec0e10 # v6.0.3
+      - uses: denoland/setup-deno@667a34cdef165d8d2b2e98dde39547c9daac7282 # v2.0.3
         with:
           deno-version: ${{ env.DENO_VERSION }}
 
@@ -27,21 +27,23 @@ jobs:
 
   dryrun:
     needs: [health]
-    name: 'Publish (dry run)'
+    name: 'publish (dry run)'
     if: ${{ !startsWith(github.ref, 'refs/tags/v') }}
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04-arm
     steps:
-      - uses: actions/checkout@v4
-      - uses: denoland/setup-deno@v1
+      - uses: actions/checkout@df4cb1c069e1874edd31b4311f1884172cec0e10 # v6.0.3
+      - uses: denoland/setup-deno@667a34cdef165d8d2b2e98dde39547c9daac7282 # v2.0.3
         with:
           deno-version: ${{ env.DENO_VERSION }}
-      - uses: actions/setup-node@v4
+      - uses: actions/setup-node@48b55a011bda9f5d6aeb4c2d9c7362e8dae4041e # v6.4.0
         with:
-          node-version: 20
+          node-version: 26
           registry-url: 'https://registry.npmjs.org'
 
       - run: deno task build
-      - run: npm publish --dry-run
+      - run: |
+          npm version patch
+          npm stage publish --dry-run
         working-directory: npm
       - run: deno publish --no-check --dry-run
 
@@ -49,20 +51,20 @@ jobs:
   # https://docs.github.com/en/actions/publishing-packages/publishing-nodejs-packages#publishing-packages-to-the-npm-registry
   publish:
     needs: [health]
-    name: Publish
-    runs-on: ubuntu-latest
+    name: publish
+    runs-on: ubuntu-24.04-arm
     if: startsWith(github.ref, 'refs/tags/v')
     permissions:
       contents: read
       id-token: write # -> authentication
     steps:
-      - uses: actions/checkout@v4
-      - uses: denoland/setup-deno@v1
+      - uses: actions/checkout@df4cb1c069e1874edd31b4311f1884172cec0e10 # v6.0.3
+      - uses: denoland/setup-deno@667a34cdef165d8d2b2e98dde39547c9daac7282 # v2.0.3
         with:
           deno-version: ${{ env.DENO_VERSION }}
-      - uses: actions/setup-node@v4
+      - uses: actions/setup-node@48b55a011bda9f5d6aeb4c2d9c7362e8dae4041e # v6.4.0
         with:
-          node-version: 20
+          node-version: 26
           registry-url: 'https://registry.npmjs.org'
 
       - run: deno task build
@@ -73,10 +75,10 @@ jobs:
 
       - name: 'Publish → npm'
         if: ${{ !contains(github.ref, '-next.') }}
-        run: npm publish --provenance --access public
+        run: npm stage publish --provenance --access public
         working-directory: npm
 
       - name: 'Publish → npm (pre-release)'
         if: ${{ contains(github.ref, '-next.') }}
-        run: npm publish --tag next --provenance --access public
+        run: npm stage publish --tag next --provenance --access public
         working-directory: npm
