@@ -22,6 +22,6 @@
 		"./package.json": "./package.json"
 	},
 	"dependencies": {
-		"object-identity": "^0.1"
+		"object-identity": "^0.2"
 	}
 }
