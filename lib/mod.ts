@@ -79,15 +79,14 @@ let batchContainer = new WeakMap<LoadFn<any, any>, Batch<any, any>>();
 export function load<T, K = string>(
 	loadFn: LoadFn<T, K>,
 	key: K,
-	identity: string = identify(key),
+	identity: string = typeof key === 'string' ? key : identify(key),
 ): Promise<T> {
 	let batch = batchContainer.get(loadFn);
 
-	let tasks: Task<T>[];
-	let keys: K[];
+	let ids: string[], keys: K[], tasks: Task<T>[];
 
 	if (!batch) {
-		batchContainer.set(loadFn, batch = [[], keys = [], tasks = []]);
+		batchContainer.set(loadFn, batch = [ids = [], keys = [], tasks = []]);
 
 		// Once we know we have a fresh batch, we schedule this batch to run after
 		// all currently queued microtasks.
@@ -115,15 +114,17 @@ export function load<T, K = string>(
 				for (; (tmp = tasks[i++]); tmp.r(error));
 			}
 		});
+	} else {
+		[ids, keys, tasks] = batch;
 	}
 
-	let b = batch[0]!.indexOf(identity);
+	let b = ids.indexOf(identity);
 	// If the batch exists, return its promise, without enqueueing a new task.
-	if (~b) return batch[2][b].p;
+	if (~b) return tasks[b].p;
 
-	let k = batch[0].push(identity) - 1;
-	let t = (batch[2][k] = {} as Task<T>);
-	batch[1][k] = key;
+	let k = ids.push(identity) - 1;
+	keys[k] = key;
+	let t = (tasks[k] = {} as Task<T>);
 
 	return (t.p = new Promise<T>(function (resolve, reject) {
 		t.s = resolve;
@@ -165,4 +166,4 @@ type Task<T> = {
 	r(e: Error): void;
 };
 
-type Batch<T, K> = [identies: string[], keys: K[], tasks: Task<T>[]];
+type Batch<T, K> = [ids: string[], keys: K[], tasks: Task<T>[]];
